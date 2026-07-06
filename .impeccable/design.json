@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-06T00:00:00.000Z",
+  "title": "Design System: TopDel House Decor",
+  "extensions": {
+    "colorMeta": {
+      "ink": { "role": "primary", "displayName": "Drafting Navy", "canonical": "#0f2240", "tonalRamp": ["#050b16", "#0b1a30", "#0f2240", "#183456", "#2b4d78", "#4a6c99", "#8aa2c2", "#cdd9e8"] },
+      "blueprint-blue": { "role": "secondary", "displayName": "Blueprint Blue", "canonical": "#2e6fb7", "tonalRamp": ["#0e2743", "#153a63", "#1d5091", "#2e6fb7", "#5089c7", "#79a5d6", "#a9c4e6", "#d7e4f4"] },
+      "tape-yellow": { "role": "tertiary", "displayName": "Tape-Measure Yellow", "canonical": "#ffb917", "tonalRamp": ["#4a3400", "#6f4f00", "#9a6d00", "#c68d00", "#f0ac09", "#ffb917", "#ffcf5c", "#ffe6a8"] },
+      "paper-tint": { "role": "neutral", "displayName": "Drafting-Paper Tint", "canonical": "#eaf1f8", "tonalRamp": ["#1f2c3a", "#33465b", "#566d87", "#7d93ab", "#a7bcd2", "#cdddec", "#eaf1f8", "#f6f9fc"] },
+      "slate": { "role": "neutral", "displayName": "Slate", "canonical": "#4a5a72", "tonalRamp": ["#141a24", "#232d3c", "#334154", "#4a5a72", "#697890", "#8e9bb0", "#b6c0cf", "#dde3ea"] },
+      "white": { "role": "neutral", "displayName": "Bench White", "canonical": "#ffffff", "tonalRamp": ["#d4d7db", "#e0e3e7", "#ebeef1", "#f2f4f6", "#f8f9fb", "#fcfcfd", "#ffffff", "#ffffff"] },
+      "error-red": { "role": "neutral", "displayName": "Fault Red", "canonical": "#a4271b", "tonalRamp": ["#3a0d08", "#571310", "#761a13", "#a4271b", "#c4392b", "#d96150", "#e89286", "#f3c3bc"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero H1 only. Expanded-width Archivo on navy." },
+      "headline": { "displayName": "Headline", "purpose": "Section H2s; colour flips with the band." },
+      "title": { "displayName": "Title", "purpose": "Card and step H3s." },
+      "body": { "displayName": "Body", "purpose": "Paragraph copy in Slate; hold to 65-75ch." },
+      "label": { "displayName": "Spec Label", "purpose": "Mono, uppercase, tracked. Eyebrows, specs, captions, field labels, dimensions." }
+    },
+    "shadows": [
+      { "name": "lifted-card", "value": "0 14px 40px rgba(15,34,64,0.18)", "purpose": "The quote form only — the one card that floats above the contact band." },
+      { "name": "object-drop", "value": "0 10px 30px rgba(15,34,64,0.45)", "purpose": "The address-plate fixture, so it reads as a physical made object." },
+      { "name": "sticky-header", "value": "0 1px 0 rgba(255,255,255,0.08)", "purpose": "Hairline lift under the nav after it detaches from the hero, paired with backdrop-filter: blur(10px)." }
+    ],
+    "motion": [
+      { "name": "reveal", "value": "opacity 0.65s ease, transform 0.65s cubic-bezier(0.2,0.6,0.2,1)", "purpose": "Scroll-in reveal (translateY(26px) -> 0). Motion-safe; falls back to visible instantly." },
+      { "name": "state", "value": "0.18s ease", "purpose": "Button background/color/transform state changes." },
+      { "name": "gallery-zoom", "value": "transform 0.5s ease", "purpose": "Gallery image scale(1.04) on hover, fine-pointer + motion-safe only." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "599px" },
+      { "name": "tablet", "value": "899px" },
+      { "name": "desktop", "value": "900px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button (solid)",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one true CTA — tape-measure yellow on navy text. Call/quote actions.",
+      "html": "<a class=\"ds-btn ds-btn-solid\" href=\"#\">Call 043 000 6015 — free quote</a>",
+      "css": ".ds-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.95rem 1.7rem; font-family: 'Archivo Variable', Archivo, sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 0.01em; text-decoration: none; border-radius: 6px; border: 2px solid transparent; transition: transform 0.18s ease, background-color 0.18s ease, color 0.18s ease; } .ds-btn-solid { background: #ffb917; color: #0f2240; } .ds-btn-solid:hover { background: #ffc945; transform: translateY(-1px); } .ds-btn-solid:focus-visible { outline: 3px solid #ffb917; outline-offset: 3px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action over dark/hero grounds — hairline border, white text.",
+      "html": "<a class=\"ds-btn ds-btn-ghost\" href=\"#\">See recent fitouts</a>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; padding: 0.95rem 1.7rem; font-family: 'Archivo Variable', Archivo, sans-serif; font-weight: 700; font-size: 1rem; text-decoration: none; border-radius: 6px; border: 2px solid rgba(255,255,255,0.35); color: #ffffff; background: transparent; transition: border-color 0.18s ease; } .ds-btn-ghost:hover { border-color: #ffffff; }"
+    },
+    {
+      "name": "Navy Button",
+      "kind": "button",
+      "refersTo": "button-navy",
+      "description": "Form submit — solid navy where yellow would clash with the contact band.",
+      "html": "<button class=\"ds-btn ds-btn-navy\" type=\"submit\">Request a free quote</button>",
+      "css": ".ds-btn-navy { display: inline-flex; align-items: center; justify-content: center; padding: 0.95rem 1.7rem; font-family: 'Archivo Variable', Archivo, sans-serif; font-weight: 700; font-size: 1rem; text-decoration: none; border: 2px solid transparent; border-radius: 6px; background: #0f2240; color: #ffffff; cursor: pointer; transition: background-color 0.18s ease; } .ds-btn-navy:hover { background: #1a3560; }"
+    },
+    {
+      "name": "Spec Eyebrow",
+      "kind": "custom",
+      "refersTo": "label",
+      "description": "Signature dimension-line label — mono text between drafting tick marks.",
+      "html": "<p class=\"ds-eyebrow\">What we build</p>",
+      "css": ".ds-eyebrow { display: flex; align-items: center; gap: 0.9rem; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: #2e6fb7; margin: 0; } .ds-eyebrow::before, .ds-eyebrow::after { content: ''; height: 9px; width: 42px; flex: none; border-inline: 1px solid currentColor; background: linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat; }"
+    },
+    {
+      "name": "Service Card",
+      "kind": "card",
+      "refersTo": "card-service",
+      "description": "Flat white card, hairline border, mono spec code above an expanded-width title.",
+      "html": "<article class=\"ds-service\"><p class=\"ds-service-spec\">WALK-IN · BUILT-IN · SLIDING</p><h3 class=\"ds-service-h\">Wardrobes</h3><p class=\"ds-service-copy\">Hanging, shelving and drawer banks arranged around how you actually dress — cut to your ceiling height, not a catalogue size.</p></article>",
+      "css": ".ds-service { background: #ffffff; border: 1px solid rgba(15,34,64,0.16); border-radius: 6px; padding: 1.7rem 1.6rem 1.9rem; max-width: 340px; } .ds-service-spec { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase; color: #2e6fb7; margin: 0 0 0.9rem; } .ds-service-h { font-family: 'Archivo Variable', Archivo, sans-serif; font-weight: 800; font-stretch: 115%; font-size: 1.35rem; line-height: 1.1; color: #0f2240; margin: 0 0 0.6rem; } .ds-service-copy { font-family: 'Instrument Sans Variable', 'Instrument Sans', sans-serif; font-size: 0.98rem; line-height: 1.6; color: #4a5a72; margin: 0; }"
+    },
+    {
+      "name": "Input Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Mono uppercase label over a hairline-bordered field with a firm blueprint-blue focus ring.",
+      "html": "<div class=\"ds-field\"><label class=\"ds-label\" for=\"ds-suburb\">Suburb</label><input class=\"ds-input\" id=\"ds-suburb\" type=\"text\" placeholder=\"e.g. Craigieburn\" /></div>",
+      "css": ".ds-field { max-width: 320px; } .ds-label { display: block; margin-bottom: 0.35rem; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.66rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: #0f2240; } .ds-input { width: 100%; padding: 0.7rem 0.85rem; font-family: 'Instrument Sans Variable', 'Instrument Sans', sans-serif; font-size: 1rem; color: #0f2240; background: #ffffff; border: 1px solid rgba(15,34,64,0.16); border-radius: 6px; } .ds-input::placeholder { color: #6a7890; } .ds-input:focus-visible { outline: 3px solid #2e6fb7; outline-offset: 1px; }"
+    },
+    {
+      "name": "Address Face Plate",
+      "kind": "custom",
+      "refersTo": "button-primary",
+      "description": "Brand fixture — navy tile, yellow border, expanded house number over a mono street label.",
+      "html": "<div class=\"ds-plate\"><span class=\"ds-plate-no\">27</span><span class=\"ds-plate-street\">EXAMPLE&nbsp;ST</span></div>",
+      "css": ".ds-plate { display: inline-block; background: #0f2240; border: 3px solid #ffb917; border-radius: 10px; padding: 1.1rem 1.9rem; text-align: center; box-shadow: 0 10px 30px rgba(15,34,64,0.45); } .ds-plate-no { display: block; font-family: 'Archivo Variable', Archivo, sans-serif; font-weight: 900; font-stretch: 125%; font-size: 3.2rem; line-height: 1; color: #ffb917; } .ds-plate-street { display: block; margin-top: 0.4rem; font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 0.62rem; letter-spacing: 0.34em; color: #ffffff; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Shop Drawing",
+    "overview": "The whole site behaves like a joiner's working drawing brought to full scale. Everything is measured: dimension lines run down the hero with real tick marks, mono spec labels annotate every photo and section the way a fabrication sheet annotates a part, and the copy talks in millimetres. The premium, bespoke quality this brand wants is not carried by ornament or gloss — it is carried by precision. The palette is a literal drafting metaphor: deep drafting-navy as the ink, blueprint-blue for the annotation layer, drafting-paper tint for the alternate ground, and a single tape-measure yellow that appears only where the visitor is meant to act. Structure is flat and honest — surfaces are defined by hairline rules, not by drop shadows — so the page feels like paper on a bench. Real installed-joinery photography does the emotional work; the drawing language frames it.",
+    "keyCharacteristics": [
+      "Measured and annotated — mono spec labels and dimension lines are the signature, not an accent.",
+      "Flat and honest — hairline borders define surface; shadow is rare and deliberate.",
+      "One-action colour — tape-measure yellow means 'do this,' and nothing else.",
+      "Photography-led trust — real TopDel installs only; a colour block is never a stand-in for a photo.",
+      "Australian, plain-spoken, exact."
+    ],
+    "rules": [
+      { "name": "The One-Action Yellow Rule", "body": "Tape-measure yellow is only ever used on something the visitor is meant to do (a primary CTA, the phone action) or on the two brand fixtures that stand in for it (the mark tile, the address plate). It is forbidden as a decorative fill, a heading colour, or a section background — except the deliberate contact band, which is itself one big call to action.", "section": "colors" },
+      { "name": "The No-Grey-On-Colour Rule", "body": "Text on navy or yellow is never mid-grey. On navy, use white or a white transparency (>=0.72 for body). On yellow, use Drafting Navy. Grey on a colour reads as washed-out and undercuts the precision.", "section": "colors" },
+      { "name": "The Mono-Is-The-Spec-Label Rule", "body": "IBM Plex Mono is reserved for labels, specs, dimensions, and captions — the annotation layer of the drawing. It is never used for body copy, headings, or buttons. Every mono string is UPPERCASE with wide tracking (>=0.16em).", "section": "typography" },
+      { "name": "The Expanded-Width Rule", "body": "Display and headline Archivo always carry the expanded width axis (font-stretch 115-125%). At default width the headings look ordinary; the expansion is what makes them TopDel. Letter-spacing floor stays at -0.015em.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "Surfaces are flat and separated by 1px hairlines or a change of ground colour (white / paper-tint / navy). A component earns a shadow only if it is literally lifted or is the action on screen. If you're adding a shadow to make a card 'pop,' delete it and add a border instead.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep tape-measure yellow (#ffb917) on actions only — the primary CTA, the phone, the mark, the plate, the contact band.",
+      "Do carry every spec, dimension, caption, and field label in UPPERCASE IBM Plex Mono with >=0.16em tracking.",
+      "Do keep display and headline Archivo on the expanded width axis (font-stretch 115-125%).",
+      "Do separate surfaces with 1px hairlines or a change of ground colour (white / #eaf1f8 / navy). Reach for a border before a shadow.",
+      "Do ship real installed-joinery photography with specific, voice-carrying alt text.",
+      "Do keep body text in Slate (#4a5a72) or navy at >=4.5:1; white or rgba(255,255,255,>=0.72) on navy.",
+      "Do gate every animation behind prefers-reduced-motion with a static, already-visible fallback."
+    ],
+    "donts": [
+      "Don't style anything like generic IKEA / flat-pack catalogue modular units. This is made-to-measure.",
+      "Don't add cheap tradie clip-art: no spinning badges, starbursts, checkmark clip-art, or '10 YEARS EXPERIENCE!' noise.",
+      "Don't slip into corporate SaaS / startup tropes: no gradient hero, no repeating icon-and-heading feature-card grid, no stock-illustration people, no hero-metric template.",
+      "Don't reach for overwrought luxury — no gold serifs, no ornament-as-status, no glassmorphism.",
+      "Don't put mid-grey text on navy or yellow, and don't lighten Slate for 'elegance.'",
+      "Don't use IBM Plex Mono for body copy, headings, or buttons — labels and specs only.",
+      "Don't add drop shadows to make cards 'pop.' Flat by default; shadow only for the form, the plate, and the sticky header.",
+      "Don't use a coloured border-left/border-right stripe as an accent, gradient-clipped text, or a tiny tracked eyebrow above every section."
+    ]
+  }
+}

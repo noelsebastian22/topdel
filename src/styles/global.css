@@ -6,6 +6,7 @@
   --yellow: #ffb917;    /* tape-measure yellow — CTAs only */
   --white: #ffffff;
   --slate: #4a5a72;     /* body text on light */
+  --fault: #a4271b;     /* form error state — the one red in the system */
   --line: rgba(15, 34, 64, 0.16);
   --line-light: rgba(255, 255, 255, 0.35);
 
@@ -15,6 +16,11 @@
 
   --radius: 6px;
   --gutter: clamp(1.25rem, 4vw, 2.5rem);
+
+  /* motion — natural deceleration, no bounce/elastic */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ————— reset ————— */
@@ -81,14 +87,69 @@ h1, h2, h3 {
 .btn-ghost:hover { border-color: var(--white); }
 .btn-navy { background: var(--ink); color: var(--white); }
 .btn-navy:hover { background: #1a3560; }
+/* tactile press — a firm 1px push, matches the "precise & confident" component feel */
+.btn:active { transform: translateY(1px); }
 
 /* ————— scroll reveals (only when JS present + motion allowed) ————— */
 @media (prefers-reduced-motion: no-preference) {
   .js [data-reveal] {
     opacity: 0; transform: translateY(26px);
-    transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.2, 0.6, 0.2, 1);
+    transition: opacity 0.65s ease, transform 0.65s var(--ease-out-quint);
   }
   .js [data-reveal].in { opacity: 1; transform: none; }
+
+  /* ——— signature hero entrance: the shop drawing drafts itself, top to bottom ———
+     Lives here (not in the scoped page style) because it keys off `.js` on <html>,
+     which a component-scoped selector can't reach. Opt-in: no JS or reduced motion
+     leaves every element in its natural, fully-visible state. */
+  .js .hero-in > * { animation: heroRise 0.75s var(--ease-out-expo) both; }
+  .js .hero-in > .eyebrow { animation-delay: 0.05s; }
+  .js .hero-in > h1 { animation: heroWipe 0.85s var(--ease-out-expo) 0.15s both; }
+  .js .hero-in > .hero-sub { animation-delay: 0.4s; }
+  .js .hero-in > .hero-cta { animation-delay: 0.54s; }
+
+  /* the measurement layer draws itself in last, framing the composition */
+  .js .dim-v { animation: drawDown 0.9s var(--ease-out-quart) 0.62s both; }
+  .js .dim-h { animation: drawRight 0.9s var(--ease-out-quart) 0.8s both; }
+
+  /* process: a real sequence, so it reveals as one — Measure → Design → Make → Install */
+  .js .process-grid > [data-reveal] { transition-delay: calc(var(--i, 0) * 90ms); }
+  .js .p-step::before {
+    transform: scaleX(0);
+    transition: transform 0.6s var(--ease-out-quart);
+    transition-delay: calc(var(--i, 0) * 90ms);
+  }
+  .js .p-step.in::before { transform: scaleX(1); }
+
+  /* grids cascade as lists rather than one uniform fade (per-row, capped) */
+  .js .services-grid > [data-reveal] { transition-delay: calc(var(--i, 0) * 55ms); }
+  .js .g-grid > [data-reveal] { transition-delay: calc(var(--i, 0) * 60ms); }
+
+  /* form status eases in instead of snapping */
+  .qf-status:not(:empty) { animation: statusIn 0.3s var(--ease-out-quart) both; }
+}
+
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(1.5rem); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes heroWipe {
+  from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(0.9rem); }
+  to   { opacity: 1; clip-path: inset(0 0 0 0);    transform: none; }
+}
+@keyframes drawDown {
+  from { opacity: 0; clip-path: inset(0 0 100% 0); }
+  18%  { opacity: 1; }
+  to   { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+@keyframes drawRight {
+  from { opacity: 0; clip-path: inset(0 100% 0 0); }
+  18%  { opacity: 1; }
+  to   { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+@keyframes statusIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

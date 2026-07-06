@@ -6,6 +6,8 @@ npm-debug.log*
 
 # AI agent files
 .claude/
+.agents/
+skills-lock.json
 CLAUDE.md
 CLAUDE.local.md
 .mcp.json
