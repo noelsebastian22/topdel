@@ -1,0 +1,653 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import testimonials from '../data/testimonials.json';
+
+import walkinOakCorner from '../assets/gallery/walkin-oak-corner.jpg';
+import walkinOakFull from '../assets/gallery/walkin-oak-full.jpg';
+import robeWhiteGloss from '../assets/gallery/robe-white-gloss.jpg';
+import robeWhiteInternal from '../assets/gallery/robe-white-internal.jpg';
+import dressingRoomWhite from '../assets/gallery/dressing-room-white.jpg';
+import displayUnitLit from '../assets/gallery/display-unit-lit.jpg';
+import studyBarOak from '../assets/gallery/study-bar-oak.jpg';
+import tvUnitOak from '../assets/gallery/tv-unit-oak.jpg';
+import shrineCabinetLit from '../assets/gallery/shrine-cabinet-lit.jpg';
+import shrineCabinetOak from '../assets/gallery/shrine-cabinet-oak.jpg';
+
+const PHONE_DISPLAY = '043 000 6015';
+const PHONE_TEL = 'tel:0430006015';
+
+const galleryItems = [
+  { img: walkinOakFull, caption: 'WALK-IN ROBE · OAK · FULL U-FIT', alt: 'U-shaped walk-in wardrobe in oak-look board with double hanging rails, open shelving and drawer banks on three walls' },
+  { img: robeWhiteGloss, caption: 'BUILT-IN ROBE · GLOSS WHITE · WALL TO WALL', alt: 'Full-wall built-in wardrobe with gloss white doors, matte black handles and drawer banks, fitted floor to ceiling' },
+  { img: studyBarOak, caption: 'STUDY / BAR NOOK · OAK · GLASS RACKS', alt: 'Recessed oak wall unit with three long shelves, hanging wine glass racks, stone benchtop and cupboards below' },
+  { img: walkinOakCorner, caption: 'WALK-IN ROBE · OAK · DOUBLE HANG + DRAWERS', alt: 'Corner of an oak walk-in wardrobe showing adjustable shelving, double hanging space and three-drawer banks' },
+  { img: displayUnitLit, caption: 'DISPLAY UNIT · OAK + STONE · LED SHELVES', alt: 'Oak display and bar unit at night with LED strip lighting under each shelf and a stone benchtop' },
+  { img: tvUnitOak, caption: 'TV WALL · FLOATING UNIT + SLAT PANEL', alt: 'Floating oak and white entertainment unit with wall-mounted TV, timber slat feature panel and open shelf tower' },
+  { img: dressingRoomWhite, caption: 'DRESSING ROOM · WHITE · DRAWER BANKS', alt: 'White walk-in dressing room with open shelving bays above banks of soft-close drawers with black handles' },
+  { img: robeWhiteInternal, caption: 'BUILT-IN ROBE · INTERNALS · SHELF + HANG', alt: 'Built-in wardrobe internals in white with hanging rails, shelving towers and drawers, fitted into a wall recess' },
+  { img: shrineCabinetLit, caption: 'PRAYER CABINET · LED SURROUND', alt: 'Custom timber prayer cabinet with floating display shelves and an LED-lit surround, over a three-drawer cupboard base' },
+  { img: shrineCabinetOak, caption: 'PRAYER CABINET · WALNUT-TONE', alt: 'Custom walnut-tone prayer cabinet in daylight with three floating shelves and a cupboard and drawer base' },
+];
+
+// Pre-generate large versions for the lightbox
+const lightboxImages = await Promise.all(
+  galleryItems.map((item) =>
+    getImage({ src: item.img, width: 1400, format: 'webp', quality: 78 })
+  )
+);
+
+const services = [
+  {
+    name: 'Wardrobes',
+    spec: 'WALK-IN · BUILT-IN · SLIDING',
+    copy: 'Hanging, shelving and drawer banks arranged around how you actually dress — cut to your ceiling height, not a catalogue size.',
+  },
+  {
+    name: 'Office & study',
+    spec: 'DESKS · SHELVING · LED DISPLAY',
+    copy: 'Desks, display walls and bar nooks with built-in lighting. Made for the room you have, whether that’s a spare bedroom or an alcove.',
+  },
+  {
+    name: 'Laundry',
+    spec: 'FULL-HEIGHT · BENCH + OVERHEADS',
+    copy: 'Full-height cabinetry that swallows baskets, brooms and detergent — so the hardest-working room in the house stays the tidiest.',
+  },
+  {
+    name: 'Address face plates',
+    spec: 'CUT TO MATCH YOUR FAÇADE',
+    copy: 'Street numbers cut and finished to suit your home’s exterior. A small piece of joinery that sets the tone before the front door.',
+  },
+];
+
+const processSteps = [
+  { n: '01', name: 'Measure', copy: 'We come to you, tape in hand, and measure the room wall to wall.' },
+  { n: '02', name: 'Design', copy: 'Layout and finishes agreed with you up front, with a clear price.' },
+  { n: '03', name: 'Make', copy: 'Cut, edged and assembled to the drawings — to the millimetre.' },
+  { n: '04', name: 'Install', copy: 'Fitted clean and level, rubbish gone, room ready to use.' },
+];
+---
+
+<Layout
+  title="TopDel House Decor — Custom wardrobes, office & laundry fitouts"
+  description={`Custom-made wardrobes, home office and laundry fitouts, and street address face plates — measured, made and installed by TopDel House Decor. Call ${PHONE_DISPLAY} for a free quote.`}
+>
+  <header id="siteHeader" class="header">
+    <div class="container header-in">
+      <a class="brand" href="#top" aria-label="TopDel House Decor — back to top">
+        <span class="brand-mark" aria-hidden="true">T</span>
+        <span class="brand-word">TOPDEL<small>HOUSE DECOR</small></span>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="#services">Services</a>
+        <a href="#work">Our work</a>
+        <a href="#process">Process</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="btn btn-solid header-call" href={PHONE_TEL}>Call {PHONE_DISPLAY}</a>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu">
+        <span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Main mobile" hidden>
+      <a href="#services">Services</a>
+      <a href="#work">Our work</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+      <a class="btn btn-solid" href={PHONE_TEL}>Call {PHONE_DISPLAY}</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- ———— HERO ———— -->
+    <section class="hero">
+      <div class="hero-media" aria-hidden="true">
+        <video
+          id="heroVideo"
+          poster="/media/hero-poster.jpg"
+          data-src="/media/topdel-fitout-web.mp4"
+          muted
+          loop
+          playsinline
+          preload="none"
+          tabindex="-1"
+        ></video>
+        <div class="hero-scrim"></div>
+      </div>
+
+      <!-- shop-drawing annotations -->
+      <div class="dim dim-v" aria-hidden="true"><span>FLOOR TO CEILING — EVERY MM USED</span></div>
+      <div class="dim dim-h" aria-hidden="true"><span>WALL TO WALL · NO FILLER PANELS</span></div>
+
+      <div class="container hero-in">
+        <p class="eyebrow eyebrow--light eyebrow--start">Custom joinery — measured · made · installed</p>
+        <h1>Storage built to<br />the millimetre.</h1>
+        <p class="hero-sub">
+          TopDel designs, makes and installs custom wardrobes, home office and laundry
+          fitouts — cut to your room’s exact dimensions, with no wasted corners.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-solid magnetic" href={PHONE_TEL}>Call {PHONE_DISPLAY} — free quote</a>
+          <a class="btn btn-ghost" href="#work">See recent fitouts</a>
+        </div>
+      </div>
+
+      <button class="video-toggle" id="videoToggle" hidden aria-pressed="true">Pause video</button>
+    </section>
+
+    <!-- ———— ABOUT ———— -->
+    <section class="about" id="about">
+      <div class="container about-grid">
+        <div class="about-copy" data-reveal>
+          <p class="eyebrow">About TopDel</p>
+          <h2>Off-the-shelf never quite fits. So we don’t sell it.</h2>
+          <p>
+            Every TopDel piece starts with a tape measure in your room. We design around
+            your ceiling height, your skirting, your awkward corner — then cut, edge and
+            assemble cabinetry that’s made to be lived in. One team measures, makes and
+            installs, so nothing gets lost between the quote and the final fit.
+          </p>
+          <ul class="spec-list">
+            <li><strong>Walk-in &amp; built-in robes</strong><span>double hang, drawer banks, shoe shelving</span></li>
+            <li><strong>Home office &amp; study</strong><span>desks, display shelving, LED strips</span></li>
+            <li><strong>Laundry &amp; utility</strong><span>full-height storage that hides the mess</span></li>
+            <li><strong>Feature pieces</strong><span>TV walls, bars, prayer cabinets, face plates</span></li>
+          </ul>
+        </div>
+        <figure class="about-photo" data-reveal>
+          <Image
+            src={walkinOakCorner}
+            alt="Oak walk-in wardrobe by TopDel with shelving, double hanging and drawer banks"
+            widths={[420, 640, 900]}
+            sizes="(min-width: 900px) 44vw, 92vw"
+            format="webp"
+            quality={72}
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>WALK-IN ROBE · OAK · INSTALLED BY TOPDEL</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ———— SERVICES ———— -->
+    <section class="services" id="services">
+      <div class="container">
+        <p class="eyebrow" data-reveal>What we build</p>
+        <h2 data-reveal>Four things, done properly.</h2>
+        <div class="services-grid">
+          {services.map((s) => (
+            <article class="service" data-reveal>
+              <p class="service-spec">{s.spec}</p>
+              <h3>{s.name}</h3>
+              <p>{s.copy}</p>
+            </article>
+          ))}
+          <aside class="service service--plate" data-reveal aria-label="Example address face plate">
+            <div class="plate" aria-hidden="true">
+              <span class="plate-no">27</span>
+              <span class="plate-street">EXAMPLE&nbsp;ST</span>
+            </div>
+            <p class="service-spec plate-note">FACE PLATE · POWDER-COATED · MADE TO ORDER</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ———— PROCESS ———— -->
+    <section class="process" id="process">
+      <div class="container">
+        <p class="eyebrow eyebrow--light" data-reveal>How it works</p>
+        <h2 data-reveal>One call. Four steps. Fitted.</h2>
+        <ol class="process-grid">
+          {processSteps.map((p) => (
+            <li data-reveal>
+              <span class="step-n" aria-hidden="true">{p.n}</span>
+              <h3>{p.name}</h3>
+              <p>{p.copy}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- ———— GALLERY ———— -->
+    <section class="work" id="work">
+      <div class="container">
+        <p class="eyebrow" data-reveal>Recent fitouts</p>
+        <h2 data-reveal>Real rooms, real millimetres.</h2>
+        <p class="work-sub" data-reveal>Every photo below is a TopDel install — no stock imagery.</p>
+        <div class="g-grid">
+          {galleryItems.map((item, i) => (
+            <figure class="g-fig" data-reveal>
+              <button
+                class="g-item"
+                type="button"
+                data-full={lightboxImages[i].src}
+                data-alt={item.alt}
+                data-caption={item.caption}
+                aria-label={`Enlarge photo: ${item.alt}`}
+              >
+                <Image
+                  src={item.img}
+                  alt={item.alt}
+                  widths={[420, 640, 900]}
+                  sizes="(min-width: 900px) 31vw, (min-width: 640px) 46vw, 92vw"
+                  format="webp"
+                  quality={70}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </button>
+              <figcaption>{item.caption}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ———— TESTIMONIALS (renders only when real quotes exist in src/data/testimonials.json) ———— -->
+    {testimonials.length > 0 && (
+      <section class="quotes" id="quotes">
+        <div class="container">
+          <p class="eyebrow" data-reveal>What clients say</p>
+          <div class="quotes-grid">
+            {testimonials.map((t: { quote: string; name: string; job?: string }) => (
+              <blockquote data-reveal>
+                <p>“{t.quote}”</p>
+                <footer>— {t.name}{t.job ? `, ${t.job}` : ''}</footer>
+              </blockquote>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- ———— CTA ———— -->
+    <section class="cta-band" id="contact">
+      <div class="container cta-in" data-reveal>
+        <div>
+          <p class="cta-kicker">FREE QUOTE · ONE VISIT · ONE PRICE</p>
+          <h2>Ready when you are.</h2>
+        </div>
+        <a class="cta-phone" href={PHONE_TEL}>{PHONE_DISPLAY}</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ———— FOOTER ———— -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand brand--footer" href="#top">
+          <span class="brand-mark" aria-hidden="true">T</span>
+          <span class="brand-word">TOPDEL<small>HOUSE DECOR</small></span>
+        </a>
+        <p class="footer-blurb">Custom cabinetry and joinery — measured, made and installed by one team.</p>
+      </div>
+      <nav aria-label="Footer services">
+        <h3>Services</h3>
+        <a href="#services">Wardrobes</a>
+        <a href="#services">Office &amp; study</a>
+        <a href="#services">Laundry</a>
+        <a href="#services">Address face plates</a>
+      </nav>
+      <div>
+        <h3>Contact</h3>
+        <a href={PHONE_TEL}>{PHONE_DISPLAY}</a>
+        {/* TODO: replace with the real TopDel Facebook page URL */}
+        <a href="https://www.facebook.com" rel="noopener">Find us on Facebook</a>
+      </div>
+    </div>
+    <div class="container footer-fine">
+      <p>© 2026 TopDel House Decor. Call today for a free quote.</p>
+    </div>
+  </footer>
+
+  <!-- ———— LIGHTBOX ———— -->
+  <dialog id="lightbox" class="lightbox" aria-label="Enlarged gallery photo">
+    <figure>
+      <img alt="" />
+      <figcaption></figcaption>
+    </figure>
+    <button id="lbClose" class="lb-close" type="button" aria-label="Close photo">×</button>
+  </dialog>
+</Layout>
+
+<style>
+  /* ———— header ———— */
+  .header {
+    position: fixed; inset: 0 0 auto; z-index: 50;
+    transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .header.scrolled { background: rgba(15, 34, 64, 0.92); backdrop-filter: blur(10px); box-shadow: 0 1px 0 rgba(255,255,255,0.08); }
+  .header-in { display: flex; align-items: center; gap: 2rem; padding-block: 0.85rem; }
+  .brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; }
+  .brand-mark {
+    display: grid; place-items: center; width: 38px; height: 38px;
+    background: var(--yellow); color: var(--ink); border-radius: var(--radius);
+    font-family: var(--font-display); font-weight: 900; font-size: 1.35rem; font-stretch: 115%;
+  }
+  .brand-word {
+    font-family: var(--font-display); font-weight: 800; font-stretch: 120%;
+    color: var(--white); font-size: 1.15rem; letter-spacing: 0.04em; line-height: 1;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .brand-word small { font-family: var(--font-mono); font-weight: 500; font-size: 0.55rem; letter-spacing: 0.34em; color: var(--yellow); }
+  .nav { display: flex; gap: 1.6rem; margin-left: auto; }
+  .nav a { color: var(--white); text-decoration: none; font-weight: 500; font-size: 0.95rem; opacity: 0.9; }
+  .nav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 5px; text-decoration-color: var(--yellow); }
+  .header-call { padding: 0.6rem 1.1rem; font-size: 0.9rem; }
+  .nav-toggle { display: none; margin-left: auto; background: none; border: 0; padding: 0.5rem; }
+  .nav-toggle span { display: block; width: 26px; height: 3px; background: var(--white); margin: 5px 0; border-radius: 2px; }
+  .mobile-nav { display: none; }
+
+  /* ———— hero ———— */
+  .hero {
+    position: relative; min-height: 100svh;
+    display: grid; align-items: center;
+    background: var(--ink); /* paints before poster loads — no flash, no CLS */
+    overflow: hidden;
+  }
+  .hero-media { position: absolute; inset: 0; }
+  .hero-media video {
+    width: 100%; height: 118%; object-fit: cover;
+    background: var(--ink) url('/media/hero-poster.jpg') center / cover no-repeat;
+    will-change: transform;
+  }
+  .hero-scrim {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(78deg, rgba(15, 34, 64, 0.9) 18%, rgba(15, 34, 64, 0.55) 52%, rgba(15, 34, 64, 0.25) 100%);
+  }
+  .hero-in { position: relative; padding-block: 8rem 6rem; }
+  .hero h1 {
+    color: var(--white);
+    font-size: clamp(2.6rem, 7.2vw, 5.2rem);
+    font-weight: 850; font-stretch: 122%;
+    margin-bottom: 1.4rem;
+  }
+  .hero-sub { color: rgba(255, 255, 255, 0.85); max-width: 34rem; font-size: 1.15rem; margin-bottom: 2.2rem; }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+  .magnetic { will-change: transform; }
+
+  /* shop-drawing dimension annotations */
+  .dim { position: absolute; z-index: 2; color: rgba(255, 255, 255, 0.85); pointer-events: none; }
+  .dim span { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.22em; }
+  .dim-v { right: clamp(1.5rem, 5vw, 4.5rem); top: 14svh; height: 62svh; border-left: 1px solid rgba(255, 255, 255, 0.55); }
+  .dim-v::before, .dim-v::after { content: ''; position: absolute; left: -7px; width: 15px; height: 1px; background: rgba(255, 255, 255, 0.55); }
+  .dim-v::before { top: 0; } .dim-v::after { bottom: 0; }
+  .dim-v span { position: absolute; top: 50%; left: 0.6rem; transform: rotate(180deg) translateY(50%); writing-mode: vertical-rl; }
+  .dim-h { left: var(--gutter); right: 40%; bottom: 5svh; border-top: 1px solid rgba(255, 255, 255, 0.55); }
+  .dim-h::before, .dim-h::after { content: ''; position: absolute; top: -7px; height: 15px; width: 1px; background: rgba(255, 255, 255, 0.55); }
+  .dim-h::before { left: 0; } .dim-h::after { right: 0; }
+  .dim-h span { display: inline-block; padding-top: 0.5rem; }
+  @media (max-width: 899px) { .dim { display: none; } }
+
+  .video-toggle {
+    position: absolute; right: 1.2rem; bottom: 1.2rem; z-index: 3;
+    background: rgba(15, 34, 64, 0.7); color: var(--white);
+    border: 1px solid rgba(255, 255, 255, 0.4); border-radius: var(--radius);
+    font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em;
+    padding: 0.45rem 0.8rem;
+  }
+
+  /* ———— about ———— */
+  .about { padding-block: clamp(4.5rem, 9vw, 7.5rem); }
+  .about-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(2.5rem, 6vw, 5rem); align-items: center; }
+  .about h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); margin-bottom: 1.1rem; }
+  .spec-list { list-style: none; padding: 0; margin-top: 2rem; border-top: 1px solid var(--line); }
+  .spec-list li {
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.3rem 1.5rem;
+    padding: 0.85rem 0; border-bottom: 1px solid var(--line);
+  }
+  .spec-list strong { color: var(--ink); font-weight: 650; }
+  .spec-list span { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); align-self: center; }
+  .about-photo { position: relative; }
+  .about-photo img { border-radius: var(--radius); aspect-ratio: 3 / 4; object-fit: cover; width: 100%; height: auto; }
+  .about-photo figcaption {
+    margin-top: 0.7rem; font-family: var(--font-mono); font-size: 0.66rem;
+    letter-spacing: 0.18em; color: var(--blue);
+  }
+
+  /* ———— services ———— */
+  .services { padding-block: clamp(4.5rem, 9vw, 7.5rem); background: var(--tint); }
+  .services h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); margin-bottom: 2.4rem; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+  .service {
+    background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 1.7rem 1.6rem 1.9rem;
+  }
+  .service-spec { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.16em; color: var(--blue); margin-bottom: 0.9rem; }
+  .service h3 { font-size: 1.35rem; margin-bottom: 0.6rem; }
+  .service p:last-child { font-size: 0.98rem; }
+  .service--plate {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.2rem;
+    background: var(--ink); border-color: var(--ink);
+  }
+  @media (min-width: 900px) {
+    /* plate tile fills the right column across both rows — no dead cell */
+    .service--plate { grid-column: 3; grid-row: 1 / 3; }
+  }
+  .plate {
+    background: var(--ink); border: 3px solid var(--yellow); border-radius: 10px;
+    padding: 1.1rem 1.9rem; text-align: center;
+    box-shadow: 0 10px 30px rgba(15, 34, 64, 0.45);
+  }
+  .plate-no { display: block; font-family: var(--font-display); font-weight: 900; font-stretch: 125%; font-size: 3.2rem; line-height: 1; color: var(--yellow); }
+  .plate-street { display: block; margin-top: 0.4rem; font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.34em; color: var(--white); }
+  .plate-note { color: rgba(255, 255, 255, 0.75); margin: 0; }
+
+  /* ———— process ———— */
+  .process { padding-block: clamp(4.5rem, 9vw, 7.5rem); background: var(--ink); }
+  .process h2 { color: var(--white); font-size: clamp(1.9rem, 3.6vw, 2.8rem); margin-bottom: 2.4rem; }
+  .process-grid { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; counter-reset: step; }
+  .process-grid li { border-top: 1px solid rgba(255, 255, 255, 0.25); padding-top: 1.1rem; }
+  .step-n { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.2em; color: var(--yellow); }
+  .process-grid h3 { color: var(--white); font-size: 1.25rem; margin: 0.5rem 0 0.4rem; }
+  .process-grid p { color: rgba(255, 255, 255, 0.72); font-size: 0.95rem; }
+
+  /* ———— gallery ———— */
+  .work { padding-block: clamp(4.5rem, 9vw, 7.5rem); }
+  .work h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); }
+  .work-sub { margin: 0.7rem 0 2.4rem; }
+  .g-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem 1.2rem; }
+  .g-fig { margin: 0; }
+  .g-item { display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: var(--radius); overflow: hidden; }
+  .g-item img { width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; transition: transform 0.5s ease; }
+  @media (prefers-reduced-motion: no-preference) {
+    .g-item:hover img { transform: scale(1.04); }
+  }
+  .g-fig figcaption { margin-top: 0.55rem; font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.15em; color: var(--blue); }
+  @media (min-width: 900px) {
+    /* two wide shots span 2 cols at 3:2 — grid fills 12 cells, row heights stay equal */
+    .g-fig:nth-child(2), .g-fig:nth-child(6) { grid-column: span 2; }
+    .g-fig:nth-child(2) img, .g-fig:nth-child(6) img { aspect-ratio: 3 / 2; }
+  }
+
+  /* ———— testimonials ———— */
+  .quotes { padding-block: clamp(4rem, 8vw, 6.5rem); background: var(--tint); }
+  .quotes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; }
+  .quotes blockquote { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.6rem; }
+  .quotes blockquote p { color: var(--ink); font-size: 1.05rem; margin-bottom: 0.8rem; }
+  .quotes footer { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; color: var(--blue); }
+
+  /* ———— CTA band ———— */
+  .cta-band { background: var(--yellow); padding-block: clamp(3.5rem, 7vw, 5.5rem); }
+  .cta-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; }
+  .cta-kicker { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.2em; color: var(--ink); margin-bottom: 0.5rem; }
+  .cta-band h2 { font-size: clamp(2rem, 4.5vw, 3.2rem); }
+  .cta-phone {
+    font-family: var(--font-display); font-weight: 900; font-stretch: 120%;
+    font-size: clamp(1.9rem, 5vw, 3.4rem); color: var(--ink); text-decoration: none;
+    border-bottom: 4px solid var(--ink); line-height: 1.15;
+  }
+  .cta-phone:hover { border-bottom-color: var(--blue); color: var(--blue); }
+
+  /* ———— footer ———— */
+  .footer { background: var(--ink); color: rgba(255, 255, 255, 0.8); padding-block: 3.5rem 0; }
+  .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2.5rem; padding-bottom: 2.8rem; }
+  .footer h3 { color: var(--white); font-size: 0.95rem; margin-bottom: 0.9rem; }
+  .footer a { color: rgba(255, 255, 255, 0.8); text-decoration: none; display: block; margin-bottom: 0.55rem; }
+  .footer a:hover { color: var(--yellow); }
+  .brand--footer .brand-word { color: var(--white); }
+  .footer-blurb { margin-top: 1rem; font-size: 0.95rem; max-width: 26rem; }
+  .footer-fine { border-top: 1px solid rgba(255, 255, 255, 0.15); padding-block: 1.3rem; }
+  .footer-fine p { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; }
+
+  /* ———— lightbox ———— */
+  .lightbox { border: 0; padding: 0; background: transparent; max-width: min(92vw, 1100px); }
+  .lightbox::backdrop { background: rgba(15, 34, 64, 0.88); }
+  .lightbox figure { margin: 0; }
+  .lightbox img { width: 100%; max-height: 82svh; object-fit: contain; border-radius: var(--radius); }
+  .lightbox figcaption { margin-top: 0.6rem; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.15em; color: var(--white); text-align: center; }
+  .lb-close {
+    position: fixed; top: 1rem; right: 1.2rem;
+    width: 46px; height: 46px; border-radius: 50%;
+    background: var(--yellow); color: var(--ink); border: 0; font-size: 1.6rem; line-height: 1;
+  }
+
+  /* ———— responsive ———— */
+  @media (max-width: 899px) {
+    .nav, .header-call { display: none; }
+    .nav-toggle { display: block; }
+    .mobile-nav {
+      display: flex; flex-direction: column; gap: 0.4rem;
+      background: rgba(15, 34, 64, 0.97); padding: 1rem var(--gutter) 1.4rem;
+    }
+    .mobile-nav[hidden] { display: none; }
+    .mobile-nav a { color: var(--white); text-decoration: none; padding: 0.6rem 0; font-size: 1.05rem; }
+    .mobile-nav .btn { margin-top: 0.6rem; }
+    .header { background: rgba(15, 34, 64, 0.92); }
+
+    .about-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .service--plate { grid-column: span 2; }
+    .process-grid { grid-template-columns: 1fr 1fr; gap: 1.6rem 1.2rem; }
+    .g-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 599px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .process-grid { grid-template-columns: 1fr; }
+    .g-grid { grid-template-columns: 1fr; }
+    .hero-in { padding-block: 7rem 4.5rem; }
+  }
+</style>
+
+<script>
+  const doc = document;
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const finePointer = matchMedia('(pointer: fine)');
+  const desktop = matchMedia('(min-width: 900px)');
+
+  /* ——— scroll reveals ——— */
+  const revealEls = Array.from(doc.querySelectorAll('[data-reveal]'));
+  if (reduceMotion.matches || !('IntersectionObserver' in window)) {
+    revealEls.forEach((el) => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        }
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -36px' }
+    );
+    revealEls.forEach((el) => io.observe(el));
+  }
+
+  /* ——— hero video: desktop only, motion-safe, respects Save-Data ——— */
+  const video = doc.getElementById('heroVideo') as HTMLVideoElement | null;
+  const saveData = (navigator as any).connection?.saveData === true;
+  let videoLoaded = false;
+  if (video && desktop.matches && !reduceMotion.matches && !saveData) {
+    video.src = video.dataset.src!;
+    video.play().catch(() => {});
+    videoLoaded = true;
+
+    const toggle = doc.getElementById('videoToggle') as HTMLButtonElement;
+    toggle.hidden = false;
+    toggle.addEventListener('click', () => {
+      const playing = !video.paused;
+      playing ? video.pause() : video.play();
+      toggle.textContent = playing ? 'Play video' : 'Pause video';
+      toggle.setAttribute('aria-pressed', String(!playing));
+    });
+  }
+
+  /* ——— hero parallax (desktop + motion-safe only) ——— */
+  if (video && videoLoaded) {
+    let ticking = false;
+    addEventListener(
+      'scroll',
+      () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const y = scrollY;
+          if (y < innerHeight) video.style.transform = `translateY(${y * 0.16}px)`;
+          ticking = false;
+        });
+      },
+      { passive: true }
+    );
+  }
+
+  /* ——— magnetic primary CTA (fine pointer + motion-safe only) ——— */
+  const mag = doc.querySelector('.magnetic') as HTMLElement | null;
+  if (mag && finePointer.matches && desktop.matches && !reduceMotion.matches) {
+    mag.addEventListener('mousemove', (e) => {
+      const r = mag.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width / 2;
+      const y = e.clientY - r.top - r.height / 2;
+      mag.style.transform = `translate(${x * 0.16}px, ${y * 0.16}px)`;
+    });
+    mag.addEventListener('mouseleave', () => {
+      mag.style.transform = '';
+    });
+  }
+
+  /* ——— header scrolled state ——— */
+  const header = doc.getElementById('siteHeader')!;
+  const onScroll = () => header.classList.toggle('scrolled', scrollY > 40);
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ——— mobile nav ——— */
+  const navToggle = doc.getElementById('navToggle') as HTMLButtonElement;
+  const mobileNav = doc.getElementById('mobileNav') as HTMLElement;
+  navToggle.addEventListener('click', () => {
+    const open = mobileNav.hidden;
+    mobileNav.hidden = !open;
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  });
+  mobileNav.querySelectorAll('a').forEach((a) =>
+    a.addEventListener('click', () => {
+      mobileNav.hidden = true;
+      navToggle.setAttribute('aria-expanded', 'false');
+    })
+  );
+
+  /* ——— gallery lightbox ——— */
+  const dlg = doc.getElementById('lightbox') as HTMLDialogElement | null;
+  if (dlg) {
+    const dImg = dlg.querySelector('img')!;
+    const dCap = dlg.querySelector('figcaption')!;
+    doc.querySelectorAll<HTMLButtonElement>('.g-item').forEach((btn) =>
+      btn.addEventListener('click', () => {
+        dImg.src = btn.dataset.full!;
+        dImg.alt = btn.dataset.alt || '';
+        dCap.textContent = btn.dataset.caption || '';
+        dlg.showModal();
+      })
+    );
+    dlg.addEventListener('click', (e) => {
+      if (e.target === dlg) dlg.close();
+    });
+    doc.getElementById('lbClose')?.addEventListener('click', () => dlg.close());
+  }
+</script>
