@@ -84,7 +84,7 @@ const processSteps = [
         <a href="#process">Process</a>
         <a href="#contact">Contact</a>
       </nav>
-      <a class="btn btn-solid header-call" href={PHONE_TEL}>Call {PHONE_DISPLAY}</a>
+      <a class="btn btn-solid header-call" href="#contact">Get in touch</a>
       <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu">
         <span></span><span></span>
       </button>
@@ -94,7 +94,7 @@ const processSteps = [
       <a href="#work">Our work</a>
       <a href="#process">Process</a>
       <a href="#contact">Contact</a>
-      <a class="btn btn-solid" href={PHONE_TEL}>Call {PHONE_DISPLAY}</a>
+      <a class="btn btn-solid" href="#contact">Get in touch</a>
     </nav>
   </header>
 
@@ -263,14 +263,59 @@ const processSteps = [
       </section>
     )}
 
-    <!-- ———— CTA ———— -->
+    <!-- ———— CONTACT ———— -->
     <section class="cta-band" id="contact">
-      <div class="container cta-in" data-reveal>
-        <div>
+      <div class="container contact-grid" data-reveal>
+        <div class="contact-intro">
           <p class="cta-kicker">FREE QUOTE · ONE VISIT · ONE PRICE</p>
           <h2>Ready when you are.</h2>
+          <p class="contact-copy">
+            Tell us a little about the room and we’ll call you back to book a free
+            measure — or skip the form and call us now.
+          </p>
+          <a class="cta-phone" href={PHONE_TEL}>{PHONE_DISPLAY}</a>
         </div>
-        <a class="cta-phone" href={PHONE_TEL}>{PHONE_DISPLAY}</a>
+
+        <form class="quote-form" id="quoteForm" method="post" novalidate>
+          <div class="qf-row">
+            <div class="qf-field">
+              <label for="qfName">Name</label>
+              <input id="qfName" name="name" type="text" autocomplete="name" required />
+            </div>
+            <div class="qf-field">
+              <label for="qfPhone">Phone</label>
+              <input id="qfPhone" name="phone" type="tel" autocomplete="tel" required />
+            </div>
+          </div>
+          <div class="qf-row">
+            <div class="qf-field">
+              <label for="qfEmail">Email <span class="qf-opt">optional</span></label>
+              <input id="qfEmail" name="email" type="email" autocomplete="email" />
+            </div>
+            <div class="qf-field">
+              <label for="qfSuburb">Suburb</label>
+              <input id="qfSuburb" name="suburb" type="text" autocomplete="address-level2" required />
+            </div>
+          </div>
+          <div class="qf-field">
+            <label for="qfType">Project type</label>
+            <select id="qfType" name="project" required>
+              <option value="" disabled selected>Choose one…</option>
+              {services.map((s) => (
+                <option value={s.name}>{s.name}</option>
+              ))}
+              <option value="Something else">Something else</option>
+            </select>
+          </div>
+          <div class="qf-field">
+            <label for="qfDetails">Project details <span class="qf-opt">room, rough sizes, finishes — anything helps</span></label>
+            <textarea id="qfDetails" name="details" rows="4"></textarea>
+          </div>
+          <!-- honeypot — hidden from real visitors -->
+          <input class="qf-hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <button class="btn btn-navy qf-submit" type="submit">Request a free quote</button>
+          <p class="qf-status" id="qfStatus" role="status" aria-live="polite"></p>
+        </form>
       </div>
     </section>
   </main>
@@ -472,17 +517,52 @@ const processSteps = [
   .quotes blockquote p { color: var(--ink); font-size: 1.05rem; margin-bottom: 0.8rem; }
   .quotes footer { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; color: var(--blue); }
 
-  /* ———— CTA band ———— */
+  /* ———— contact / CTA band ———— */
   .cta-band { background: var(--yellow); padding-block: clamp(3.5rem, 7vw, 5.5rem); }
-  .cta-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem; }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1.1fr;
+    gap: clamp(2rem, 5vw, 4.5rem); align-items: start;
+  }
   .cta-kicker { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.2em; color: var(--ink); margin-bottom: 0.5rem; }
   .cta-band h2 { font-size: clamp(2rem, 4.5vw, 3.2rem); }
+  .contact-copy { color: var(--ink); margin: 1rem 0 1.8rem; max-width: 26rem; }
   .cta-phone {
     font-family: var(--font-display); font-weight: 900; font-stretch: 120%;
     font-size: clamp(1.9rem, 5vw, 3.4rem); color: var(--ink); text-decoration: none;
     border-bottom: 4px solid var(--ink); line-height: 1.15;
   }
   .cta-phone:hover { border-bottom-color: var(--blue); color: var(--blue); }
+
+  /* quote form */
+  .quote-form {
+    background: var(--white); border-radius: var(--radius);
+    padding: clamp(1.4rem, 3vw, 2.2rem);
+    box-shadow: 0 14px 40px rgba(15, 34, 64, 0.18);
+  }
+  .qf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .qf-field { margin-bottom: 1rem; }
+  .qf-field label {
+    display: block; margin-bottom: 0.35rem;
+    font-family: var(--font-mono); font-size: 0.66rem; font-weight: 500;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink);
+  }
+  .qf-opt { color: var(--slate); opacity: 0.75; text-transform: none; letter-spacing: 0.06em; }
+  .qf-field input,
+  .qf-field select,
+  .qf-field textarea {
+    width: 100%; padding: 0.7rem 0.85rem;
+    font: inherit; font-size: 1rem; color: var(--ink);
+    background: var(--white); border: 1px solid var(--line); border-radius: var(--radius);
+  }
+  .qf-field textarea { resize: vertical; min-height: 6.5rem; }
+  .qf-field input:focus-visible,
+  .qf-field select:focus-visible,
+  .qf-field textarea:focus-visible { outline: 3px solid var(--blue); outline-offset: 1px; }
+  .qf-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .qf-submit { width: 100%; margin-top: 0.4rem; }
+  .qf-status { margin: 0.8rem 0 0; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; color: var(--ink); }
+  .qf-status:empty { display: none; }
+  .qf-status.error { color: #a4271b; }
 
   /* ———— footer ———— */
   .footer { background: var(--ink); color: rgba(255, 255, 255, 0.8); padding-block: 3.5rem 0; }
@@ -521,6 +601,7 @@ const processSteps = [
     .header { background: rgba(15, 34, 64, 0.92); }
 
     .about-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
     .services-grid { grid-template-columns: 1fr 1fr; }
     .service--plate { grid-column: span 2; }
     .process-grid { grid-template-columns: 1fr 1fr; gap: 1.6rem 1.2rem; }
@@ -531,6 +612,7 @@ const processSteps = [
     .process-grid { grid-template-columns: 1fr; }
     .g-grid { grid-template-columns: 1fr; }
     .hero-in { padding-block: 7rem 4.5rem; }
+    .qf-row { grid-template-columns: 1fr; gap: 0; }
   }
 </style>
 
@@ -631,6 +713,52 @@ const processSteps = [
       navToggle.setAttribute('aria-expanded', 'false');
     })
   );
+
+  /* ——— quote form ——— */
+  // TODO: set to the real form endpoint before go-live (e.g. Formspree: https://formspree.io/f/XXXXXXXX)
+  const FORM_ENDPOINT = '';
+  const form = doc.getElementById('quoteForm') as HTMLFormElement | null;
+  const status = doc.getElementById('qfStatus') as HTMLParagraphElement | null;
+  if (form && status) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // honeypot — silently drop bot submissions
+      const hp = form.elements.namedItem('company') as HTMLInputElement;
+      if (hp?.value) return;
+
+      if (!form.reportValidity()) return;
+
+      const submit = form.querySelector('.qf-submit') as HTMLButtonElement;
+      const fail = () => {
+        status.classList.add('error');
+        status.textContent = 'SOMETHING WENT WRONG — PLEASE CALL 043 000 6015 INSTEAD.';
+      };
+
+      if (!FORM_ENDPOINT) {
+        fail();
+        return;
+      }
+
+      submit.disabled = true;
+      status.classList.remove('error');
+      status.textContent = 'SENDING…';
+      try {
+        const res = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        status.textContent = 'THANKS — WE’LL CALL YOU BACK WITHIN ONE BUSINESS DAY.';
+      } catch {
+        fail();
+      } finally {
+        submit.disabled = false;
+      }
+    });
+  }
 
   /* ——— gallery lightbox ——— */
   const dlg = doc.getElementById('lightbox') as HTMLDialogElement | null;
