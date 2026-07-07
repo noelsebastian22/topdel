@@ -1,0 +1,218 @@
+---
+// Fixed site header shared by every page.
+// `current="home"` keeps same-page anchors; any other page prefixes them with "/".
+interface Props {
+  current?: 'home' | 'gallery';
+}
+const { current = 'home' } = Astro.props;
+const p = current === 'home' ? '' : '/';
+const workHref = current === 'gallery' ? '/gallery' : '#work';
+const workCurrent = current === 'gallery' ? 'page' : undefined;
+---
+
+<header id="siteHeader" class="header">
+  <div class="container header-in">
+    <a class="brand" href={current === 'home' ? '#top' : '/'} aria-label="TopDel House Decor — home">
+      <span class="brand-mark" aria-hidden="true">T</span>
+      <span class="brand-word">TOPDEL<small>HOUSE DECOR</small></span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href={`${p}#services`}>Services</a>
+      <a href={workHref} aria-current={workCurrent}>Our work</a>
+      <a href={`${p}#process`}>Process</a>
+      <a href={`${p}#contact`}>Contact</a>
+    </nav>
+    <a class="btn btn-solid header-call" href={`${p}#contact`}>Get in touch</a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu">
+      <span></span><span></span>
+    </button>
+  </div>
+  <!--
+    Mobile nav: always rendered for smooth animation.
+    `inert` (not `hidden`) keeps it out of the AT + tab order when closed
+    while still allowing CSS transitions to run.
+    `--i` drives the per-link stagger delay.
+  -->
+  <nav class="mobile-nav" id="mobileNav" inert aria-label="Main mobile">
+    <a href={`${p}#services`} style="--i:0">Services</a>
+    <a href={workHref} aria-current={workCurrent} style="--i:1">Our work</a>
+    <a href={`${p}#process`} style="--i:2">Process</a>
+    <a href={`${p}#contact`} style="--i:3">Contact</a>
+    <a class="btn btn-solid" href={`${p}#contact`} style="--i:4">Get in touch</a>
+  </nav>
+</header>
+
+<style>
+  .header {
+    position: fixed; inset: 0 0 auto; z-index: 50;
+    transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .header.scrolled {
+    background: rgba(15, 34, 64, 0.92);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.08);
+  }
+  .header-in { display: flex; align-items: center; gap: 2rem; padding-block: 0.85rem; }
+
+  /* ——— desktop nav ——— */
+  .nav { display: flex; gap: 1.6rem; margin-left: auto; }
+  .nav a { color: var(--white); text-decoration: none; font-weight: 500; font-size: 0.95rem; opacity: 0.9; }
+  .nav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 5px; text-decoration-color: var(--yellow); }
+  .nav a[aria-current='page'] { opacity: 1; text-decoration: underline; text-underline-offset: 5px; text-decoration-color: var(--yellow); }
+  .header-call { padding: 0.6rem 1.1rem; font-size: 0.9rem; }
+
+  /* ——— hamburger toggle ——— */
+  .nav-toggle {
+    display: none;
+    margin-left: auto;
+    background: none;
+    border: 0;
+    padding: 0.5rem;
+    /* Flex column so gap is deterministic (no margin-collapse ambiguity) */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+  }
+  .nav-toggle span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background: var(--white);
+    border-radius: 2px;
+    /* Both bars animate independently */
+    transition: transform 0.3s var(--ease-out-quint);
+    transform-origin: center;
+  }
+  /*
+    X morph maths (flex + gap:5px):
+    - Bar 1 center: 1.5px from top of content; bar 2 center: 9.5px (gap 5 + 3 + 1.5).
+    - Midpoint: 5.5px. Each bar travels 4px to meet there.
+  */
+  .nav-toggle.is-open span:nth-child(1) { transform: translateY(4px)  rotate(45deg);  }
+  .nav-toggle.is-open span:nth-child(2) { transform: translateY(-4px) rotate(-45deg); }
+
+  /* ——— mobile nav panel ——— */
+  /* Out of flow on desktop — display:none keeps it fully out */
+  .mobile-nav { display: none; }
+
+  /* Link stagger keyframe — purposely outside the @media block for max compat */
+  @keyframes nav-link-in {
+    from { opacity: 0; transform: translateY(-7px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 899px) {
+    .nav, .header-call { display: none; }
+    .nav-toggle { display: flex; }
+    /* Mobile header is always tinted (no transparent phase at top) */
+    .header { background: rgba(15, 34, 64, 0.92); }
+
+    /* Panel — always in DOM but clipped closed by default */
+    .mobile-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      background: rgba(15, 34, 64, 0.97);
+      padding: 1rem var(--gutter) 1.4rem;
+
+      /*
+        Closed state: clip-path collapses the panel upward from the bottom
+        (wipe direction matches the header it slides from), plus a quick fade.
+        pointer-events:none prevents phantom clicks while invisible.
+      */
+      clip-path: inset(0 0 100% 0);
+      opacity: 0;
+      pointer-events: none;
+      transition:
+        clip-path 0.38s var(--ease-out-quint),
+        opacity   0.28s var(--ease-out-quint);
+    }
+
+    /* Open state: full reveal */
+    .mobile-nav.is-open {
+      clip-path: inset(0 0 0% 0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Link base styles */
+    .mobile-nav a {
+      color: var(--white);
+      text-decoration: none;
+      padding: 0.65rem 0;
+      font-size: 1.05rem;
+      font-weight: 500;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .mobile-nav a:last-child { border-bottom: 0; }
+    .mobile-nav .btn {
+      margin-top: 0.75rem;
+      border-bottom: 0;
+      align-self: flex-start;
+    }
+
+    /*
+      Stagger entrance: each link drifts up and fades in after the panel
+      starts opening. `both` fill mode holds the `from` state during the
+      delay, so links are invisible before they animate (no pop-in).
+      The base 60ms offset lets the clip-path wipe get ahead first.
+    */
+    .mobile-nav.is-open a {
+      animation: nav-link-in 0.3s var(--ease-out-quint) both;
+      animation-delay: calc(var(--i, 0) * 55ms + 0.06s);
+    }
+  }
+</style>
+
+<script>
+  const doc = document;
+
+  /* ——— header scrolled state ——— */
+  const header = doc.getElementById('siteHeader')!;
+  const onScroll = () => header.classList.toggle('scrolled', scrollY > 40);
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ——— mobile nav ——— */
+  const navToggle = doc.getElementById('navToggle') as HTMLButtonElement;
+  const mobileNav  = doc.getElementById('mobileNav')  as HTMLElement;
+
+  /*
+    We use `inert` (not `hidden`) so the panel stays rendered for CSS
+    transitions while being fully inaccessible when closed.
+    A timer sets `inert` back once the close animation completes.
+  */
+  let inertTimer: ReturnType<typeof setTimeout> | null = null;
+
+  function openMenu() {
+    // Cancel any in-flight close timer so we don't inert a re-opened panel
+    if (inertTimer !== null) { clearTimeout(inertTimer); inertTimer = null; }
+    mobileNav.removeAttribute('inert');
+    mobileNav.classList.add('is-open');
+    navToggle.classList.add('is-open');
+    navToggle.setAttribute('aria-expanded', 'true');
+    navToggle.setAttribute('aria-label', 'Close menu');
+  }
+
+  function closeMenu() {
+    mobileNav.classList.remove('is-open');
+    navToggle.classList.remove('is-open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.setAttribute('aria-label', 'Open menu');
+    // 400ms > longest transition (380ms clip-path). Guard checks we haven't
+    // re-opened in the meantime (rapid tap).
+    inertTimer = setTimeout(() => {
+      if (!mobileNav.classList.contains('is-open')) mobileNav.setAttribute('inert', '');
+      inertTimer = null;
+    }, 400);
+  }
+
+  navToggle.addEventListener('click', () => {
+    if (mobileNav.classList.contains('is-open')) { closeMenu(); } else { openMenu(); }
+  });
+
+  // Close on any link click (same-page anchors or route change)
+  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+</script>
