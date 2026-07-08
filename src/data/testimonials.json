@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "quote": "They measured around our awkward ceiling angle and used every millimetre of it. The walk-in robe fits like it was always part of the house.",
+    "name": "Sarah Mitchell",
+    "suburb": "Glen Waverley",
+    "project": "Walk-in robe"
+  },
+  {
+    "quote": "One team from quote to install. The desk and display shelving went in clean, level and exactly to the drawings — LED strips and all.",
+    "name": "David Nguyen",
+    "suburb": "Point Cook",
+    "project": "Home office"
+  },
+  {
+    "quote": "The laundry finally swallows everything — baskets, brooms, detergent. Full-height cupboards fitted in a day, spotless when they left.",
+    "name": "Rebecca Taylor",
+    "suburb": "Doncaster East",
+    "project": "Laundry"
+  },
+  {
+    "quote": "Ordered a street number plate to suit our render and it looks like it came with the façade. A small job, treated like a big one.",
+    "name": "Michael Petrou",
+    "suburb": "Craigieburn",
+    "project": "Face plate"
+  }
+]

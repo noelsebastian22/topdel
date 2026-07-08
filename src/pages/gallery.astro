@@ -1,0 +1,407 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { categories, galleryItems, countFor } from '../data/gallery.ts';
+
+// Pre-render a large variant of every photo for the lightbox.
+const fullImages = await Promise.all(
+  galleryItems.map((item) => getImage({ src: item.img, width: 1600, format: 'webp', quality: 78 }))
+);
+---
+
+<Layout
+  title="Our work — TopDel House Decor"
+  description="Every photo is a TopDel install — wardrobes, kitchens, office and display units, prayer cabinets, laundries and address face plates across Melbourne."
+>
+  <SiteHeader current="gallery" />
+
+  <main id="top">
+    <!-- ———— PAGE INTRO ———— -->
+    <section class="g-hero">
+      <div class="container hero-in">
+        <p class="eyebrow eyebrow--light">Our work</p>
+        <h1>Every photo is a TopDel install.</h1>
+        <p class="g-hero-sub hero-sub">No stock imagery, no showroom sets — real rooms, measured, made and fitted by one team.</p>
+      </div>
+    </section>
+
+    <!-- ———— FILTER + GRID ———— -->
+    <section class="g-body">
+      <div class="container">
+        <div class="chips" role="group" aria-label="Filter photos by category">
+          <button class="chip" type="button" data-filter="all" aria-pressed="true">
+            ALL <span class="chip-n">{galleryItems.length}</span>
+          </button>
+          {categories.map((c) => (
+            <button class="chip" type="button" data-filter={c.slug} aria-pressed="false">
+              {c.name.toUpperCase()} <span class="chip-n">{countFor(c.slug)}</span>
+            </button>
+          ))}
+        </div>
+
+        <p class="g-status" id="gStatus" role="status" aria-live="polite"></p>
+
+        <div class="g-grid" id="gGrid">
+          {galleryItems.map((item, i) => (
+            <figure class="g-fig" data-category={item.category} data-reveal style={`--i: ${Math.min(i, 11)}`}>
+              <button
+                class="g-item"
+                type="button"
+                data-full={fullImages[i].src}
+                data-w={fullImages[i].attributes.width}
+                data-h={fullImages[i].attributes.height}
+                data-alt={item.alt}
+                data-caption={item.caption}
+                aria-label={`Enlarge photo: ${item.caption}`}
+              >
+                <Image
+                  src={item.img}
+                  alt={item.alt}
+                  widths={[420, 640, 900]}
+                  sizes="(min-width: 900px) 31vw, (min-width: 640px) 46vw, 92vw"
+                  format="webp"
+                  quality={70}
+                  loading={i < 6 ? 'eager' : 'lazy'}
+                  decoding="async"
+                />
+              </button>
+              <figcaption>{item.caption}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter />
+
+  <!-- ———— LIGHTBOX ———— -->
+  <dialog id="lightbox" class="lightbox" aria-label="Enlarged gallery photo">
+    <figure>
+      <img alt="" />
+      <figcaption></figcaption>
+    </figure>
+    <button id="lbPrev" class="lb-nav lb-prev" type="button" aria-label="Previous photo">‹</button>
+    <button id="lbNext" class="lb-nav lb-next" type="button" aria-label="Next photo">›</button>
+    <button id="lbClose" class="lb-close" type="button" aria-label="Close photo">×</button>
+  </dialog>
+</Layout>
+
+<style>
+  /* ———— intro band (dark, sits behind the fixed header) ———— */
+  .g-hero { background: var(--ink); color: var(--white); padding-block: 8.5rem 3.5rem; }
+  .g-hero h1 {
+    font-family: var(--font-display); font-weight: 800; font-stretch: 115%;
+    font-size: clamp(2rem, 4.5vw, 3.2rem); line-height: 1.05; max-width: 22ch;
+    color: var(--white);
+  }
+  .g-hero-sub { margin-top: 1rem; max-width: 46ch; opacity: 0.85; }
+
+  /* ———— chips ———— */
+  .g-body { padding-block: 2.6rem 5.5rem; }
+  .chips { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.1rem; }
+  .chip {
+    font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em;
+    color: var(--ink); background: var(--white);
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 0.55rem 1rem; cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.12s ease;
+  }
+  .chip:hover { border-color: var(--blue); transform: scale(1.03); }
+  .chip[aria-pressed='true'] { background: var(--ink); border-color: var(--ink); color: var(--white); }
+  /* active chip doesn't scale on hover — it's already selected */
+  .chip[aria-pressed='true']:hover { transform: none; }
+  .chip-n { color: var(--blue); margin-left: 0.3em; }
+  .chip[aria-pressed='true'] .chip-n { color: var(--yellow); }
+
+  .g-status { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.15em; color: var(--blue); min-height: 1.2em; margin-bottom: 1.4rem; }
+
+  /* ———— grid ———— */
+  .g-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem 1.2rem; }
+  .g-fig { margin: 0; }
+  .g-fig[hidden] { display: none; }
+  .g-item { display: block; width: 100%; padding: 0; border: 0; background: none; border-radius: var(--radius); overflow: hidden; cursor: zoom-in; }
+  .g-item img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; transition: transform 0.5s ease; }
+  @media (prefers-reduced-motion: no-preference) {
+    .g-item:hover img, .g-item:focus-visible img { transform: scale(1.04); }
+  }
+  .g-fig figcaption { margin-top: 0.55rem; font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.15em; color: var(--blue); }
+
+  /* ———— lightbox ———— */
+  /* overflow:visible — the UA gives <dialog> overflow:auto, which flashes a
+     scrollbar while the open animation's translateY overflows the dialog box.
+     Nothing in here ever needs to scroll (img is capped at 82svh). */
+  .lightbox { border: 0; padding: 0; background: transparent; max-width: min(92vw, 1100px); margin: auto; overflow: visible; }
+  .lightbox figure { margin: 0; }
+  .lightbox img { width: 100%; max-height: 82svh; object-fit: contain; border-radius: var(--radius); transition: opacity 0.18s ease; }
+
+  /* open/close animation — fade the dialog + backdrop, rise the photo.
+     Uses @starting-style + discrete display/overlay transitions (progressive
+     enhancement: older browsers simply open/close instantly). The transform
+     lives on the inner figure, not the dialog, so the position:fixed
+     controls are never re-anchored by an animating transform. */
+  .lightbox {
+    opacity: 0;
+    transition:
+      opacity 0.25s ease,
+      display 0.25s ease allow-discrete,
+      overlay 0.25s ease allow-discrete;
+  }
+  .lightbox[open] { opacity: 1; }
+  .lightbox figure { transform: scale(0.96) translateY(14px); transition: transform 0.3s var(--ease-out-quint); }
+  .lightbox[open] figure { transform: none; }
+  .lightbox::backdrop {
+    background: rgba(15, 34, 64, 0);
+    transition:
+      background-color 0.25s ease,
+      display 0.25s ease allow-discrete,
+      overlay 0.25s ease allow-discrete;
+  }
+  .lightbox[open]::backdrop { background: rgba(15, 34, 64, 0.88); }
+  @starting-style {
+    .lightbox[open] { opacity: 0; }
+    .lightbox[open] figure { transform: scale(0.96) translateY(14px); }
+    .lightbox[open]::backdrop { background: rgba(15, 34, 64, 0); }
+  }
+  .lightbox figcaption { margin-top: 0.6rem; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.15em; color: var(--white); text-align: center; }
+  .lb-close {
+    position: fixed; top: 1rem; right: 1.2rem;
+    width: 46px; height: 46px; border-radius: 50%;
+    background: var(--yellow); color: var(--ink); border: 0; font-size: 1.6rem; line-height: 1; cursor: pointer;
+  }
+  .lb-nav {
+    position: fixed; top: 50%; margin-top: -23px;
+    width: 46px; height: 46px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.14); color: var(--white);
+    border: 1px solid var(--line-light);
+    font-size: 1.7rem; line-height: 1; cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+  .lb-nav:hover { background: rgba(255, 255, 255, 0.28); border-color: var(--white); }
+  .lb-prev { left: 1.2rem; }
+  .lb-next { right: 1.2rem; }
+  /* single-photo category — nothing to step through */
+  .lightbox.lb-solo .lb-nav { display: none; }
+  @media (max-width: 599px) {
+    .lb-nav { width: 40px; height: 40px; margin-top: -20px; }
+    .lb-prev { left: 0.5rem; }
+    .lb-next { right: 0.5rem; }
+  }
+
+  /* ———— responsive ———— */
+  @media (max-width: 899px) {
+    .g-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 599px) {
+    .g-grid { grid-template-columns: 1fr; }
+    .g-hero { padding-block: 7rem 3rem; }
+  }
+
+  /* ———— filter transition animations ———— */
+  @media (prefers-reduced-motion: no-preference) {
+    /* chip: tactile press pulse when selected */
+    .chip[aria-pressed='true'] { animation: chipSelect 0.22s var(--ease-out-quint); }
+
+    /* items leaving the grid */
+    .g-fig--exit {
+      animation: figExit 0.165s var(--ease-out-quart) forwards;
+      pointer-events: none;
+    }
+
+    /* items entering the grid — stagger via --enter-i custom property */
+    .g-fig--enter {
+      animation: figEnter 0.38s var(--ease-out-quint) both;
+      animation-delay: calc(var(--enter-i, 0) * 45ms);
+    }
+  }
+
+  @keyframes chipSelect {
+    0%   { transform: scale(0.93); }
+    60%  { transform: scale(1.04); }
+    100% { transform: none; }
+  }
+  @keyframes figExit {
+    from { opacity: 1; transform: none; }
+    to   { opacity: 0; transform: scale(0.95) translateY(-8px); }
+  }
+  @keyframes figEnter {
+    from { opacity: 0; transform: translateY(20px) scale(0.97); }
+    to   { opacity: 1; transform: none; }
+  }
+</style>
+
+<script>
+  const doc = document;
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+
+  /* ——— scroll reveals (same pattern as index.astro) ——— */
+  const revealEls = Array.from(doc.querySelectorAll<Element>('[data-reveal]'));
+  if (reduceMotion.matches || !('IntersectionObserver' in window)) {
+    revealEls.forEach((el) => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        }
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -36px' }
+    );
+    revealEls.forEach((el) => io.observe(el));
+  }
+
+  /* ——— category filtering (chips + ?category= deep link) ——— */
+  const chips = Array.from(doc.querySelectorAll<HTMLButtonElement>('.chip'));
+  const figs  = Array.from(doc.querySelectorAll<HTMLElement>('.g-fig'));
+  const statusEl = doc.getElementById('gStatus')!;
+  const validSlugs = new Set(chips.map((c) => c.dataset.filter!));
+
+  // Animation timing
+  const EXIT_MS      = 165;   // all exits fire simultaneously, done by 165 ms
+  const ENTER_STAGGER = 45;   // ms per item stagger
+  const ENTER_CAP    = 12;    // cap stagger so last item never waits > 540 ms
+  const ENTER_DUR    = 380;   // figEnter animation duration
+
+  let filterTimer: ReturnType<typeof setTimeout> | null = null;
+
+  // Abort any in-flight filter transition cleanly
+  const cancelInFlight = () => {
+    if (!filterTimer) return;
+    clearTimeout(filterTimer);
+    filterTimer = null;
+    for (const fig of figs) {
+      if (fig.classList.contains('g-fig--exit')) {
+        fig.classList.remove('g-fig--exit');
+        fig.hidden = true;
+      }
+      if (fig.classList.contains('g-fig--enter')) {
+        fig.classList.remove('g-fig--enter');
+        fig.style.removeProperty('--enter-i');
+      }
+    }
+  };
+
+  const apply = (slug: string, updateUrl = true, animate = true) => {
+    if (!validSlugs.has(slug)) slug = 'all';
+
+    // ① Immediate UI feedback — chip state + live status
+    for (const chip of chips) {
+      chip.setAttribute('aria-pressed', String(chip.dataset.filter === slug));
+    }
+    const shown = figs.filter((f) => slug === 'all' || f.dataset.category === slug).length;
+    statusEl.textContent =
+      slug === 'all'
+        ? `SHOWING ALL ${shown} PHOTOS`
+        : `SHOWING ${shown} ${shown === 1 ? 'PHOTO' : 'PHOTOS'}`;
+
+    if (updateUrl) {
+      const url = new URL(location.href);
+      if (slug === 'all') url.searchParams.delete('category');
+      else url.searchParams.set('category', slug);
+      history.replaceState(null, '', url);
+    }
+
+    // ② Classify which items are exiting / entering / staying
+    const exiting: HTMLElement[] = [];
+    const entering: HTMLElement[] = [];
+    for (const fig of figs) {
+      const shouldShow = slug === 'all' || fig.dataset.category === slug;
+      if (!shouldShow && !fig.hidden) exiting.push(fig);
+      else if (shouldShow && fig.hidden)  entering.push(fig);
+    }
+
+    // No animation path: initial page load or reduced-motion preference
+    if (!animate || reduceMotion.matches) {
+      exiting.forEach((fig) => { fig.hidden = true; });
+      entering.forEach((fig) => { fig.classList.add('in'); fig.hidden = false; });
+      return;
+    }
+
+    // ③ Cancel any previous in-flight transition
+    cancelInFlight();
+
+    // ④ Start exits (all at once — clearing the slate)
+    exiting.forEach((fig) => fig.classList.add('g-fig--exit'));
+
+    // ⑤ After exits complete, hide them and stagger entrances in
+    const waitMs = exiting.length > 0 ? EXIT_MS : 0;
+    filterTimer = setTimeout(() => {
+      // Seal exits
+      exiting.forEach((fig) => {
+        fig.classList.remove('g-fig--exit');
+        fig.hidden = true;
+      });
+
+      // Staggered entrances — add .in first so data-reveal doesn't fight the animation
+      entering.forEach((fig, i) => {
+        fig.classList.add('in');
+        fig.hidden = false;
+        fig.style.setProperty('--enter-i', String(Math.min(i, ENTER_CAP)));
+        fig.classList.add('g-fig--enter');
+      });
+
+      // Clean up animation classes after the last item finishes
+      const lastDelay = Math.min(Math.max(entering.length - 1, 0), ENTER_CAP) * ENTER_STAGGER;
+      setTimeout(() => {
+        entering.forEach((fig) => {
+          fig.classList.remove('g-fig--enter');
+          fig.style.removeProperty('--enter-i');
+        });
+      }, ENTER_DUR + lastDelay + 50);
+
+      filterTimer = null;
+    }, waitMs);
+  };
+
+  chips.forEach((chip) => chip.addEventListener('click', () => apply(chip.dataset.filter!)));
+
+  // Honour ?category= from the homepage tiles — no animation on initial paint
+  apply(new URLSearchParams(location.search).get('category') ?? 'all', false, false);
+
+  /* ——— lightbox ——— */
+  const dlg   = doc.getElementById('lightbox') as HTMLDialogElement;
+  const dImg  = dlg.querySelector('img')!;
+  const dCap  = dlg.querySelector('figcaption')!;
+  const items = Array.from(doc.querySelectorAll<HTMLButtonElement>('.g-item'));
+
+  // Steps through only the currently-visible photos so prev/next respects the active filter
+  let visible: HTMLButtonElement[] = [];
+  let current = 0;
+
+  const showLb = (idx: number) => {
+    current = (idx + visible.length) % visible.length;
+    const btn = visible[current];
+    // Reserve aspect ratio before the hi-res file loads — no layout jump
+    if (btn.dataset.w && btn.dataset.h) dImg.style.aspectRatio = `${btn.dataset.w} / ${btn.dataset.h}`;
+    dImg.style.opacity = '0';
+    dImg.src    = btn.dataset.full!;
+    dImg.alt    = btn.dataset.alt || '';
+    dCap.textContent = btn.dataset.caption || '';
+    if (dImg.complete) dImg.style.opacity = '1';
+    else dImg.addEventListener('load', () => (dImg.style.opacity = '1'), { once: true });
+  };
+
+  items.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      visible = items.filter((b) => !b.closest<HTMLElement>('.g-fig')!.hidden);
+      dlg.classList.toggle('lb-solo', visible.length < 2);
+      showLb(visible.indexOf(btn));
+      dlg.showModal();
+    })
+  );
+
+  doc.getElementById('lbPrev')!.addEventListener('click', () => showLb(current - 1));
+  doc.getElementById('lbNext')!.addEventListener('click', () => showLb(current + 1));
+  dlg.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft')  showLb(current - 1);
+    if (e.key === 'ArrowRight') showLb(current + 1);
+  });
+
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  doc.getElementById('lbClose')!.addEventListener('click', () => dlg.close());
+</script>

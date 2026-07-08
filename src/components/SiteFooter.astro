@@ -1,0 +1,49 @@
+---
+// Site footer shared by every page. Links use "/#anchor" form so they resolve
+// from any route (on the homepage the browser treats them as same-page anchors).
+import { PHONE_DISPLAY, PHONE_TEL } from '../data/site';
+---
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <a class="brand brand--footer" href="#top">
+        <span class="brand-mark" aria-hidden="true">T</span>
+        <span class="brand-word">TOPDEL<small>HOUSE DECOR</small></span>
+      </a>
+      <p class="footer-blurb">Custom cabinetry and joinery — measured, made and installed by one team.</p>
+    </div>
+    <nav aria-label="Footer services">
+      <h3>Services</h3>
+      <a href="/#services">Wardrobes</a>
+      <a href="/#services">Kitchen cabinets</a>
+      <a href="/#services">Office &amp; study</a>
+      <a href="/#services">Laundry</a>
+      <a href="/#services">Address face plates</a>
+    </nav>
+    <div>
+      <h3>Contact</h3>
+      <a href={PHONE_TEL}>{PHONE_DISPLAY}</a>
+      {/* TODO: replace with the real TopDel Facebook page URL */}
+      <a href="https://www.facebook.com" rel="noopener">Find us on Facebook</a>
+    </div>
+  </div>
+  <div class="container footer-fine">
+    <p>© 2026 TopDel House Decor. Call today for a free quote.</p>
+  </div>
+</footer>
+
+<style>
+  .footer { background: var(--ink); color: rgba(255, 255, 255, 0.8); padding-block: 3.5rem 0; }
+  .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2.5rem; padding-bottom: 2.8rem; }
+  .footer h3 { color: var(--white); font-size: 0.95rem; margin-bottom: 0.9rem; }
+  .footer a { color: rgba(255, 255, 255, 0.8); text-decoration: none; display: block; margin-bottom: 0.55rem; }
+  .footer a:hover { color: var(--yellow); }
+  .footer-blurb { margin-top: 1rem; font-size: 0.95rem; max-width: 26rem; }
+  .footer-fine { border-top: 1px solid rgba(255, 255, 255, 0.15); padding-block: 1.3rem; }
+  .footer-fine p { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; }
+
+  @media (max-width: 599px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 1.8rem; }
+  }
+</style>
