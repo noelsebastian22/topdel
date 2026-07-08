@@ -48,7 +48,7 @@ const workCurrent = current === 'gallery' ? 'page' : undefined;
     transition: background-color 0.25s ease, box-shadow 0.25s ease;
   }
   .header.scrolled {
-    background: rgba(15, 34, 64, 0.92);
+    background: color-mix(in srgb, var(--ink) 92%, transparent);
     backdrop-filter: blur(10px);
     box-shadow: 0 1px 0 rgba(255,255,255,0.08);
   }
@@ -107,34 +107,63 @@ const workCurrent = current === 'gallery' ? 'page' : undefined;
     .nav, .header-call { display: none; }
     .nav-toggle { display: flex; }
     /* Mobile header is always tinted (no transparent phase at top) */
-    .header { background: rgba(15, 34, 64, 0.92); }
+    .header { background: color-mix(in srgb, var(--ink) 92%, transparent); }
 
     /* Panel — always in DOM but clipped closed by default */
     .mobile-nav {
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
-      background: rgba(15, 34, 64, 0.97);
+      background: color-mix(in srgb, var(--ink) 97%, transparent);
       padding: 1rem var(--gutter) 1.4rem;
 
       /*
-        Closed state: clip-path collapses the panel upward from the bottom
-        (wipe direction matches the header it slides from), plus a quick fade.
+        Absolutely positioned so it doesn't expand the header's height when
+        closed — preventing the header background from painting a phantom
+        dark overlay over page content on mobile.
+        top: 100% places the panel flush below the header bar.
+      */
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+
+      /*
+        Closed state: clip-path wipes the panel upward from the bottom
+        (direction matches the header it slides from), plus a quick fade
+        and a -6px Y offset so the panel emerges from the header with
+        natural downward momentum as it opens.
+        visibility:hidden is the key guard — it prevents the element from
+        painting entirely (clip-path alone is unreliable on iOS Safari).
+        The visibility transition has a 0.38s delay so it only snaps to
+        hidden AFTER the close animation completes, keeping the wipe visible.
         pointer-events:none prevents phantom clicks while invisible.
       */
       clip-path: inset(0 0 100% 0);
       opacity: 0;
+      visibility: hidden;
       pointer-events: none;
+      transform: translateY(-6px);
       transition:
-        clip-path 0.38s var(--ease-out-quint),
-        opacity   0.28s var(--ease-out-quint);
+        clip-path  0.38s var(--ease-out-quint),
+        opacity    0.28s var(--ease-out-quint),
+        transform  0.38s var(--ease-out-quint),
+        visibility 0s   linear 0.38s;
     }
 
-    /* Open state: full reveal */
+    /* Open state: full reveal — panel settles from -6px to rest position */
     .mobile-nav.is-open {
       clip-path: inset(0 0 0% 0);
       opacity: 1;
+      visibility: visible;
       pointer-events: auto;
+      transform: translateY(0);
+      /* visibility must become visible instantly on open (no delay) */
+      transition:
+        clip-path  0.38s var(--ease-out-quint),
+        opacity    0.28s var(--ease-out-quint),
+        transform  0.38s var(--ease-out-quint),
+        visibility 0s;
     }
 
     /* Link base styles */
@@ -194,13 +223,18 @@ const workCurrent = current === 'gallery' ? 'page' : undefined;
     navToggle.classList.add('is-open');
     navToggle.setAttribute('aria-expanded', 'true');
     navToggle.setAttribute('aria-label', 'Close menu');
+    // Focus management: move focus into the nav so keyboard/AT users land inside
+    (mobileNav.querySelector('a') as HTMLElement | null)?.focus();
   }
 
-  function closeMenu() {
+  // returnFocus: true for Escape / toggle-click (focus back to toggle);
+  // false for link clicks (the anchor navigation takes care of focus naturally).
+  function closeMenu(returnFocus = true) {
     mobileNav.classList.remove('is-open');
     navToggle.classList.remove('is-open');
     navToggle.setAttribute('aria-expanded', 'false');
     navToggle.setAttribute('aria-label', 'Open menu');
+    if (returnFocus) navToggle.focus();
     // 400ms > longest transition (380ms clip-path). Guard checks we haven't
     // re-opened in the meantime (rapid tap).
     inertTimer = setTimeout(() => {
@@ -213,6 +247,20 @@ const workCurrent = current === 'gallery' ? 'page' : undefined;
     if (mobileNav.classList.contains('is-open')) { closeMenu(); } else { openMenu(); }
   });
 
-  // Close on any link click (same-page anchors or route change)
-  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+  // Close on any link click — don't steal focus; anchor navigation handles it
+  mobileNav.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => closeMenu(false))
+  );
+
+  // Escape closes the menu and returns focus to the toggle
+  doc.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileNav.classList.contains('is-open')) closeMenu();
+  });
+
+  // Click outside the header closes the menu
+  doc.addEventListener('click', (e) => {
+    if (mobileNav.classList.contains('is-open') && !header.contains(e.target as Node)) {
+      closeMenu();
+    }
+  });
 </script>
