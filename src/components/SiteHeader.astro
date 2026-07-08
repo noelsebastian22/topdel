@@ -1,6 +1,9 @@
 ---
 // Fixed site header shared by every page.
 // `current="home"` keeps same-page anchors; any other page prefixes them with "/".
+import { Image } from 'astro:assets';
+import logo from '../assets/topdel-logo.jpeg';
+
 interface Props {
   current?: 'home' | 'gallery';
 }
@@ -13,8 +16,7 @@ const workCurrent = current === 'gallery' ? 'page' : undefined;
 <header id="siteHeader" class="header">
   <div class="container header-in">
     <a class="brand" href={current === 'home' ? '#top' : '/'} aria-label="TopDel House Decor — home">
-      <span class="brand-mark" aria-hidden="true">T</span>
-      <span class="brand-word">TOPDEL<small>HOUSE DECOR</small></span>
+      <Image src={logo} alt="TopDel Renovation logo" class="brand-logo" width={120} height={120} />
     </a>
     <nav class="nav" aria-label="Main">
       <a href={`${p}#services`}>Services</a>
