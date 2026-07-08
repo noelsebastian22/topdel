@@ -1,52 +1,37 @@
-# Memory — Gallery Page Complete + Desktop Verified
+# Memory — Mobile Nav Accessibility + Animation Polish
 
-Last updated: 2026-07-07 18:51
+Last updated: 2026-07-08 14:05
 
 ## What was built
 
-- `src/data/gallery.ts` — shared data module: `categories` (6: wardrobes, kitchens, office-display, prayer-cabinets, face-plates, laundry), `galleryItems` (19 items with `img`, `category`, `caption`, `alt`), `countFor(slug)` helper. Single source of truth for homepage tiles and gallery page.
-- 19 real client photos in `src/assets/gallery/` (named by convention).
-- `src/components/SiteHeader.astro` / `SiteFooter.astro` — extracted shared header/footer; header takes `current?` prop so "Our work" gets `aria-current="page"` on /gallery.
-- `src/pages/index.astro` — #work section reworked into 6 category tiles (photo + mono count) deep-linking to `/gallery?category=<slug>`; "View all 19 photos" button; Kitchen service card added.
-- `src/pages/gallery.astro` — full gallery page:
-  - Dark `.g-hero` intro band.
-  - Chip filter row (ALL + 6 categories with counts, `aria-pressed`, live `#gStatus` "SHOWING N PHOTOS").
-  - 3/2/1-column responsive grid with IntersectionObserver scroll-reveal (`.g-fig` → `.g-fig.in`).
-  - `?category=` deep-link honoured on load, kept in sync via `history.replaceState`.
-  - Native `<dialog>` lightbox: 1600px webp per photo via `getImage()`, yellow × close, backdrop-click + Esc, backdrop/dialog fade + figure rise-scale via `@starting-style` + `allow-discrete`, prev/next ‹ › buttons (ArrowLeft/ArrowRight, wrap-around, filter-aware), `.lb-solo` hides nav when only 1 photo shown, 0.18s image micro-fade on swap.
-- `src/styles/global.css` line 32 — `html:has(dialog[open]) { overflow: hidden; scrollbar-gutter: stable; }` — prevents layout-shift jerk when lightbox opens.
+- `src/components/SiteHeader.astro` — mobile nav accessibility and animation polish, committed as `7bf069f`:
+  - **Escape key handler** — `doc.addEventListener('keydown', …)` closes menu on `Escape` and returns focus to toggle
+  - **Focus management** — `openMenu()` calls `mobileNav.querySelector('a')?.focus()` to move focus into the nav; `closeMenu(returnFocus = true)` calls `navToggle.focus()` to return focus to toggle; link clicks pass `closeMenu(false)` so anchor navigation handles focus naturally
+  - **Click-outside-to-close** — `doc.addEventListener('click', …)` closes when tap is outside `header.contains(e.target)`
+  - **Design system tokens** — replaced all three `rgba(15, 34, 64, …)` hardcodes with `color-mix(in srgb, var(--ink) 92/97%, transparent)` — if `--ink` changes, all mobile header tints follow automatically
+  - **Animation upgrade** — added `transform: translateY(-6px)` to closed state (resolves to `translateY(0)` on open); same technique as `heroWipe` in `global.css`; adds kinetic momentum so the panel feels like it emerges from the header with downward gravity rather than just unmasking. Added `transform 0.38s var(--ease-out-quint)` to both transition blocks.
 
 ## Decisions made
 
-- One shared `gallery.ts` data module — homepage counts and gallery filtering can never drift apart.
-- Chip filter is single-select (ALL or one category), not additive — matches the 6-category scale.
-- Native `<dialog>` for lightbox (free focus trap, Esc, ::backdrop) + pure-CSS animation as progressive enhancement.
-- Lightbox prev/next cycles only through currently-filtered photos, not all 19.
-- Transform on inner `<figure>`, not the `<dialog>` itself — avoids re-anchoring the `position: fixed` stacking context during the open animation.
+- `closeMenu(returnFocus = true)` parameter pattern chosen so link clicks don't steal focus from anchor navigation, while Escape and toggle-click correctly return focus to the hamburger button.
+- `color-mix(in srgb, var(--ink) N%, transparent)` is the canonical way to express alpha variants of design tokens in this project going forward — no new raw rgba values for ink-coloured backgrounds.
+- `translateY(-6px)` on the panel closed state: subtle enough not to be noticeable in isolation, but gives the opening animation proper kinetic weight. Mirrors the pattern already used in `heroWipe`.
 
 ## Problems solved
 
-- **Preview server serves stale builds** — port 4324 runs `astro preview` (built dist/). Source edits DO NOT appear until `npm run build`. Always rebuild before browser-verifying.
-- **Gallery hero H1 invisible (navy on navy)** — `h1 { color: var(--ink) }` in global.css beats inherited color; fixed with explicit `color: var(--white)` on `.g-hero h1`.
-- **Lightbox dialog pinned top-left** — `* { margin: 0 }` reset kills UA `margin: auto` dialog centering; restored with `margin: auto` on `.lightbox`.
-- **Lightbox open layout-shift jerk** — solved with `scrollbar-gutter: stable` on `html:has(dialog[open])` (global.css line 32).
+- All 4 review findings from the recovery analysis are now resolved and committed.
+- `closeMenu` focus-return was split into a parameter rather than always calling `navToggle.focus()` — calling it on link clicks would have redirected focus away from the anchor target.
 
 ## Current state
 
-- `npm run build` passes. Both pages (`/` and `/gallery`) fully functional.
-- **Desktop verification complete** — all gallery features confirmed working live:
-  - 19 photos load, all 6 filter chips correct, counts accurate.
-  - Clicking a chip updates active style, status line, and URL (`?category=slug`).
-  - Scroll-reveal IntersectionObserver fires correctly.
-  - Lightbox opens with caption, prev/next nav, close button all working.
-- 768px partially verified (previous session); 375px verification **not yet done**.
-- Git status: last commit `08cebf8 style: add basic animations` — gallery page changes are **uncommitted**.
+- Mobile nav: fully complete, all accessibility requirements met, animation polished. Committed `7bf069f`.
+- Latest commit on `main`: `7bf069f fix(mobile-nav): accessibility + polish`
+- **375px mobile layout verification still not done** — carried over from two sessions ago. Homepage tiles, chip filter, gallery grid, lightbox at 375px have never been explicitly verified.
 
 ## Next session starts with
 
-1. **Commit the gallery work** — `git add -A && git commit -m "feat: gallery page with filters, lightbox, scroll-reveal"`.
-2. **375px mobile verification** — check: homepage tiles stack to 1-col, chips wrap and scroll horizontally, 1-col grid, lightbox centred + animated, ‹ › buttons reachable.
-3. After that, pre-launch TODO sweep (see Open questions).
+1. **375px mobile verification** — resize browser to 375px and check: homepage hero, tiles, chip filter, gallery grid, lightbox open/close, contact form. Fix anything that breaks.
+2. If verification passes clean, tackle the next open question (see below).
 
 ## Open questions
 
@@ -54,3 +39,4 @@ Last updated: 2026-07-07 18:51
 - `FORM_ENDPOINT` in contact form is a placeholder — needs real endpoint wired up.
 - Footer Facebook URL is a placeholder.
 - Testimonials in `src/data/testimonials.json` are mock entries — must swap for real ones before go-live (ACCC risk).
+- `rgba(255, 255, 255, 0.08)` used for nav link dividers and header box-shadow has no design system token — either add `--line-on-dark` token or leave as-is.
