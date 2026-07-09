@@ -153,17 +153,17 @@ const fullImages = await Promise.all(
   .lightbox figure { transform: scale(0.96) translateY(14px); transition: transform 0.3s var(--ease-out-quint); }
   .lightbox[open] figure { transform: none; }
   .lightbox::backdrop {
-    background: rgba(15, 34, 64, 0);
+    background: color-mix(in srgb, var(--ink) 0%, transparent);
     transition:
       background-color 0.25s ease,
       display 0.25s ease allow-discrete,
       overlay 0.25s ease allow-discrete;
   }
-  .lightbox[open]::backdrop { background: rgba(15, 34, 64, 0.88); }
+  .lightbox[open]::backdrop { background: color-mix(in srgb, var(--ink) 88%, transparent); }
   @starting-style {
     .lightbox[open] { opacity: 0; }
     .lightbox[open] figure { transform: scale(0.96) translateY(14px); }
-    .lightbox[open]::backdrop { background: rgba(15, 34, 64, 0); }
+    .lightbox[open]::backdrop { background: color-mix(in srgb, var(--ink) 0%, transparent); }
   }
   .lightbox figcaption { margin-top: 0.6rem; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.15em; color: var(--white); text-align: center; }
   .lb-close {
