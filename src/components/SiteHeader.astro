@@ -3,6 +3,7 @@
 // `current="home"` keeps same-page anchors; any other page prefixes them with "/".
 import { Image } from 'astro:assets';
 import logo from '../assets/topdel-logo.png';
+import { BUSINESS_NAME } from '../data/site';
 
 interface Props {
   current?: 'home' | 'gallery';
@@ -15,8 +16,8 @@ const workCurrent = current === 'gallery' ? 'page' : undefined;
 
 <header id="siteHeader" class="header">
   <div class="container header-in">
-    <a class="brand" href={current === 'home' ? '#top' : '/'} aria-label="TopDel House Decor — home">
-      <Image src={logo} alt="TopDel Renovation logo" class="brand-logo" width={120} height={120} />
+    <a class="brand" href={current === 'home' ? '#top' : '/'} aria-label={`${BUSINESS_NAME} — home`}>
+      <Image src={logo} alt={`${BUSINESS_NAME} logo`} class="brand-logo" width={120} height={120} />
     </a>
     <nav class="nav" aria-label="Main">
       <a href={`${p}#services`}>Services</a>
@@ -180,6 +181,7 @@ const workCurrent = current === 'gallery' ? 'page' : undefined;
     .mobile-nav a:last-child { border-bottom: 0; }
     .mobile-nav .btn {
       margin-top: 0.75rem;
+      padding: 0.75rem 1.5rem;
       border-bottom: 0;
       align-self: flex-start;
     }

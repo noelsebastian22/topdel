@@ -12,7 +12,7 @@ Their context when they arrive: they've likely seen flat-pack and big-box option
 
 ## Product Purpose
 
-A lead-generation marketing site for TopDel House Decor, a custom joinery / house-decor business. It exists to convert a cautious homeowner into an enquiry by **building trust first**: real completed-project photography and a clear, honest account of how the work is measured, made and installed do the persuading, and the enquiry (a phone call to 043 000 6015 or the contact form) is the payoff once the visitor is convinced.
+A lead-generation marketing site for TopDel Renovation, a custom joinery / renovation business. It exists to convert a cautious homeowner into an enquiry by **building trust first**: real completed-project photography and a clear, honest account of how the work is measured, made and installed do the persuading, and the enquiry (a phone call to 043 000 6015 or the contact form) is the payoff once the visitor is convinced.
 
 Success looks like qualified enquiries from homeowners who value bespoke craft and have already decided TopDel is the maker they want — not raw click volume. The gallery is the engine; the call/form is the finish line.
 

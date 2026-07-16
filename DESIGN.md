@@ -1,5 +1,5 @@
 ---
-name: TopDel House Decor
+name: TopDel Renovation
 description: Custom joinery, documented like a shop drawing — measured, annotated, precise.
 colors:
   ink: "#0f2240"
@@ -82,7 +82,7 @@ components:
     padding: "0.7rem 0.85rem"
 ---
 
-# Design System: TopDel House Decor
+# Design System: TopDel Renovation
 
 ## 1. Overview
 
