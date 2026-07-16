@@ -1,13 +1,13 @@
 /* ————— TopDel House Decor — design tokens ————— */
 :root {
-  --ink: #0f2240;       /* deep navy — headers, footer, headings */
+  --ink: #042343;       /* deep navy — brand-logo background; headers, footer, headings */
   --blue: #2e6fb7;      /* blueprint blue — links, accents */
   --tint: #eaf1f8;      /* drafting-paper tint — alternate sections */
   --yellow: #ffb917;    /* tape-measure yellow — CTAs only */
   --white: #ffffff;
   --slate: #4a5a72;     /* body text on light */
   --fault: #a4271b;     /* form error state — the one red in the system */
-  --line: rgba(15, 34, 64, 0.16);
+  --line: color-mix(in srgb, var(--ink) 16%, transparent);
   --line-light: rgba(255, 255, 255, 0.35);
 
   --font-display: 'Archivo Variable', 'Archivo', sans-serif;
@@ -101,7 +101,7 @@ h1, h2, h3 {
 .btn-ghost { border-color: var(--line-light); color: var(--white); }
 .btn-ghost:hover { border-color: var(--white); }
 .btn-navy { background: var(--ink); color: var(--white); }
-.btn-navy:hover { background: #1a3560; }
+.btn-navy:hover { background: #10365e; }
 /* tactile press — a firm 1px push, matches the "precise & confident" component feel */
 .btn:active { transform: translateY(1px); }
 

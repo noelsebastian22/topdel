@@ -1,15 +1,18 @@
 ---
-// Site footer shared by every page. Links use "/#anchor" form so they resolve
-// from any route (on the homepage the browser treats them as same-page anchors).
-import { PHONE_DISPLAY, PHONE_TEL } from '../data/site';
+import { BUSINESS_NAME, PHONE_DISPLAY, PHONE_TEL, WHATSAPP_URL, INSTAGRAM_URL, FACEBOOK_URL } from '../data/site';
+
+const [brandFirst, ...brandRest] = BUSINESS_NAME.split(' ');
+const brandSuffix = brandRest.join(' ');
 ---
 
 <footer class="footer">
   <div class="container footer-grid">
     <div>
-      <a class="brand brand--footer" href="#top">
-        <span class="brand-mark" aria-hidden="true">T</span>
-        <span class="brand-word">TOPDEL<small>HOUSE DECOR</small></span>
+      <a class="brand brand--footer" href="#top" aria-label={`${BUSINESS_NAME} — home`}>
+        <span class="brand-word">
+          <span class="brand-word-main">{brandFirst.toUpperCase()}</span>
+          <span class="brand-word-sub">{brandSuffix.toUpperCase()}</span>
+        </span>
       </a>
       <p class="footer-blurb">Custom cabinetry and joinery — measured, made and installed by one team.</p>
     </div>
@@ -24,12 +27,13 @@ import { PHONE_DISPLAY, PHONE_TEL } from '../data/site';
     <div>
       <h3>Contact</h3>
       <a href={PHONE_TEL}>{PHONE_DISPLAY}</a>
-      {/* TODO: replace with the real TopDel Facebook page URL */}
-      <a href="https://www.facebook.com" rel="noopener">Find us on Facebook</a>
+      <a href={WHATSAPP_URL} target="_blank" rel="noopener">WhatsApp us</a>
+      <a href={FACEBOOK_URL} target="_blank" rel="noopener">Find us on Facebook</a>
+      <a href={INSTAGRAM_URL} target="_blank" rel="noopener">Follow on Instagram</a>
     </div>
   </div>
   <div class="container footer-fine">
-    <p>© 2026 TopDel House Decor. Call today for a free quote.</p>
+    <p>© 2026 {BUSINESS_NAME}. Call today for a free quote.</p>
   </div>
 </footer>
 
@@ -40,6 +44,18 @@ import { PHONE_DISPLAY, PHONE_TEL } from '../data/site';
   .footer a { color: rgba(255, 255, 255, 0.8); text-decoration: none; display: block; margin-bottom: 0.55rem; }
   .footer a:hover { color: var(--yellow); }
   .footer-blurb { margin-top: 1rem; font-size: 0.95rem; max-width: 26rem; }
+
+  /* brand wordmark — Title (Archivo, expanded) + Label (mono, tracked) per DESIGN.md */
+  .brand-word { display: flex; flex-direction: column; line-height: 1; gap: 0.35rem; }
+  .brand-word-main {
+    font-family: var(--font-display); font-weight: 800; font-stretch: 118%;
+    font-size: 1.55rem; letter-spacing: -0.01em; color: var(--white);
+  }
+  .brand-word-sub {
+    font-family: var(--font-mono); font-weight: 500; font-size: 0.62rem;
+    letter-spacing: 0.24em; color: var(--blue);
+  }
+  .brand--footer:hover .brand-word-main { color: var(--yellow); }
   .footer-fine { border-top: 1px solid rgba(255, 255, 255, 0.15); padding-block: 1.3rem; }
   .footer-fine p { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; }
 

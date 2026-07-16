@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-07-06T00:00:00.000Z",
-  "title": "Design System: TopDel House Decor",
+  "title": "Design System: TopDel Renovation",
   "extensions": {
     "colorMeta": {
       "ink": { "role": "primary", "displayName": "Drafting Navy", "canonical": "#0f2240", "tonalRamp": ["#050b16", "#0b1a30", "#0f2240", "#183456", "#2b4d78", "#4a6c99", "#8aa2c2", "#cdd9e8"] },

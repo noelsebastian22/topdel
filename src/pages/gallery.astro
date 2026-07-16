@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import { categories, galleryItems, countFor } from '../data/gallery.ts';
+import { BUSINESS_NAME } from '../data/site';
 
 // Pre-render a large variant of every photo for the lightbox.
 const fullImages = await Promise.all(
@@ -12,7 +13,7 @@ const fullImages = await Promise.all(
 ---
 
 <Layout
-  title="Our work — TopDel House Decor"
+  title={`Our work — ${BUSINESS_NAME}`}
   description="Every photo is a TopDel install — wardrobes, kitchens, office and display units, prayer cabinets, laundries and address face plates across Melbourne."
 >
   <SiteHeader current="gallery" />
@@ -83,9 +84,15 @@ const fullImages = await Promise.all(
       <img alt="" />
       <figcaption></figcaption>
     </figure>
-    <button id="lbPrev" class="lb-nav lb-prev" type="button" aria-label="Previous photo">‹</button>
-    <button id="lbNext" class="lb-nav lb-next" type="button" aria-label="Next photo">›</button>
-    <button id="lbClose" class="lb-close" type="button" aria-label="Close photo">×</button>
+    <button id="lbPrev" class="lb-nav lb-prev" type="button" aria-label="Previous photo">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M13 4L7 10l6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button id="lbNext" class="lb-nav lb-next" type="button" aria-label="Next photo">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7 4l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button id="lbClose" class="lb-close" type="button" aria-label="Close photo">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4 4l10 10M14 4L4 14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+    </button>
   </dialog>
 </Layout>
 
@@ -153,30 +160,32 @@ const fullImages = await Promise.all(
   .lightbox figure { transform: scale(0.96) translateY(14px); transition: transform 0.3s var(--ease-out-quint); }
   .lightbox[open] figure { transform: none; }
   .lightbox::backdrop {
-    background: rgba(15, 34, 64, 0);
+    background: color-mix(in srgb, var(--ink) 0%, transparent);
     transition:
       background-color 0.25s ease,
       display 0.25s ease allow-discrete,
       overlay 0.25s ease allow-discrete;
   }
-  .lightbox[open]::backdrop { background: rgba(15, 34, 64, 0.88); }
+  .lightbox[open]::backdrop { background: color-mix(in srgb, var(--ink) 88%, transparent); }
   @starting-style {
     .lightbox[open] { opacity: 0; }
     .lightbox[open] figure { transform: scale(0.96) translateY(14px); }
-    .lightbox[open]::backdrop { background: rgba(15, 34, 64, 0); }
+    .lightbox[open]::backdrop { background: color-mix(in srgb, var(--ink) 0%, transparent); }
   }
   .lightbox figcaption { margin-top: 0.6rem; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.15em; color: var(--white); text-align: center; }
   .lb-close {
     position: fixed; top: 1rem; right: 1.2rem;
+    display: flex; align-items: center; justify-content: center;
     width: 46px; height: 46px; border-radius: 50%;
-    background: var(--yellow); color: var(--ink); border: 0; font-size: 1.6rem; line-height: 1; cursor: pointer;
+    background: var(--yellow); color: var(--ink); border: 0; cursor: pointer;
   }
   .lb-nav {
     position: fixed; top: 50%; margin-top: -23px;
+    display: flex; align-items: center; justify-content: center;
     width: 46px; height: 46px; border-radius: 50%;
     background: rgba(255, 255, 255, 0.14); color: var(--white);
     border: 1px solid var(--line-light);
-    font-size: 1.7rem; line-height: 1; cursor: pointer;
+    cursor: pointer;
     transition: background-color 0.2s ease, border-color 0.2s ease;
   }
   .lb-nav:hover { background: rgba(255, 255, 255, 0.28); border-color: var(--white); }
