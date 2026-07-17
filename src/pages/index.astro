@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, Picture } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -8,6 +8,7 @@ import { categories, galleryItems, countFor } from '../data/gallery';
 import { BUSINESS_NAME, PHONE_DISPLAY, PHONE_TEL, WHATSAPP_URL, INSTAGRAM_URL, FACEBOOK_URL } from '../data/site';
 
 import walkinOakCorner from '../assets/gallery/wardrobes/walkin-oak-corner.jpg';
+import heroWardrobe from '../assets/hero-wardrobe.jpg';
 
 const totalPhotos = galleryItems.length;
 
@@ -57,16 +58,18 @@ const processSteps = [
     <!-- ———— HERO ———— -->
     <section class="hero">
       <div class="hero-media" aria-hidden="true">
-        <video
-          id="heroVideo"
-          poster="/media/hero-poster.jpg"
-          data-src="/media/topdel-fitout-web.mp4"
-          muted
-          loop
-          playsinline
-          preload="none"
-          tabindex="-1"
-        ></video>
+        <Picture
+          src={heroWardrobe}
+          alt=""
+          formats={['avif', 'webp']}
+          fallbackFormat="jpg"
+          widths={[640, 960, 1440, 2000, 2666]}
+          sizes="100vw"
+          quality={74}
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
         <div class="hero-scrim"></div>
       </div>
 
@@ -87,7 +90,6 @@ const processSteps = [
         </div>
       </div>
 
-      <button class="video-toggle" id="videoToggle" hidden aria-pressed="true">Pause video</button>
     </section>
 
     <!-- ———— ABOUT ———— -->
@@ -324,9 +326,11 @@ const processSteps = [
     overflow: hidden;
   }
   .hero-media { position: absolute; inset: 0; }
-  .hero-media video {
+  .hero-media img {
     width: 100%; height: 118%; object-fit: cover;
-    background: var(--ink) url('/media/hero-poster.jpg') center / cover no-repeat;
+    /* bias toward the wardrobe as narrower viewports crop the sides;
+       the quiet blue wall on the left is the headline zone under the scrim */
+    object-position: 56% 50%;
     will-change: transform;
   }
   .hero-scrim {
@@ -357,14 +361,6 @@ const processSteps = [
   .dim-h::before { left: 0; } .dim-h::after { right: 0; }
   .dim-h span { display: inline-block; padding-top: 0.5rem; }
   @media (max-width: 899px) { .dim { display: none; } }
-
-  .video-toggle {
-    position: absolute; right: 1.2rem; bottom: 1.2rem; z-index: 3;
-    background: color-mix(in srgb, var(--ink) 70%, transparent); color: var(--white);
-    border: 1px solid rgba(255, 255, 255, 0.4); border-radius: var(--radius);
-    font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em;
-    padding: 0.45rem 0.8rem;
-  }
 
   /* ———— about ———— */
   .about { padding-block: clamp(4.5rem, 9vw, 7.5rem); }
@@ -565,6 +561,8 @@ const processSteps = [
     .cat-grid { grid-template-columns: 1fr; }
     .quotes-grid { grid-template-columns: 1fr; }
     .hero-in { padding-block: 7rem 4.5rem; }
+    /* tall phone crop: centre on the hanging rail, not the empty wall */
+    .hero-media img { object-position: 60% 50%; }
     .qf-row { grid-template-columns: 1fr; gap: 0; }
     /* Stack + equalise the call/WhatsApp buttons so they don't sit at
        mismatched widths on narrow screens */
@@ -598,27 +596,9 @@ const processSteps = [
     revealEls.forEach((el) => io.observe(el));
   }
 
-  /* ——— hero video: desktop only, motion-safe, respects Save-Data ——— */
-  const video = doc.getElementById('heroVideo') as HTMLVideoElement | null;
-  const saveData = (navigator as any).connection?.saveData === true;
-  let videoLoaded = false;
-  if (video && desktop.matches && !reduceMotion.matches && !saveData) {
-    video.src = video.dataset.src!;
-    video.play().catch(() => {});
-    videoLoaded = true;
-
-    const toggle = doc.getElementById('videoToggle') as HTMLButtonElement;
-    toggle.hidden = false;
-    toggle.addEventListener('click', () => {
-      const playing = !video.paused;
-      playing ? video.pause() : video.play();
-      toggle.textContent = playing ? 'Play video' : 'Pause video';
-      toggle.setAttribute('aria-pressed', String(!playing));
-    });
-  }
-
   /* ——— hero parallax (desktop + motion-safe only) ——— */
-  if (video && videoLoaded) {
+  const heroImg = doc.querySelector('.hero-media img') as HTMLElement | null;
+  if (heroImg && desktop.matches && !reduceMotion.matches) {
     let ticking = false;
     addEventListener(
       'scroll',
