@@ -145,4 +145,89 @@ export const galleryMeta: Record<string, GalleryMeta> = {
     caption: 'PRAYER CABINET · WALNUT-TONE',
     alt: 'Custom walnut-tone prayer cabinet in daylight with three floating shelves and a cupboard and drawer base',
   },
+  'wardrobes/walkin-mirror-slider.jpg': {
+    order: 20,
+    caption: 'WALK-IN ROBE · MIRROR SLIDER · SHELF + DRAWERS',
+    alt: 'Walk-in wardrobe with a full-height mirrored sliding door on one side and open shelving with drawer banks on the other, oak-look flooring',
+  },
+  'wardrobes/wardrobe-gloss-white-fitout.jpg': {
+    order: 21,
+    caption: 'BUILT-IN ROBE · GLOSS WHITE · OPEN FIT-OUT',
+    alt: 'Open gloss white built-in wardrobe showing hanging rails, adjustable shelving and drawer banks across multiple bays',
+  },
+  'wardrobes/wardrobe-walnut-panelled.jpg': {
+    order: 22,
+    caption: 'WARDROBE · WALNUT · PANELLED DOORS',
+    alt: 'Full-height walnut-toned wardrobe with eight panelled doors and a central bank of drawers, set on a marble-look tiled floor',
+  },
+  'wardrobes/walkin-white-black-trim.jpg': {
+    order: 23,
+    caption: 'WALK-IN ROBE · WHITE · BLACK-TRIM MIRROR',
+    alt: 'White walk-in wardrobe interior with a black-framed mirrored sliding door, open shelving, hanging rails and drawer banks',
+  },
+  'wardrobes/walkin-oak-shelves-drawers.jpg': {
+    order: 24,
+    caption: 'WALK-IN ROBE · OAK · CENTRE HANG + SHELVES',
+    alt: 'Oak-look walk-in wardrobe with a central hanging rail flanked by open shelving and drawer banks on both sides',
+  },
+  'wardrobes/wardrobe-oak-shelf-tower.jpg': {
+    order: 25,
+    caption: 'WARDROBE · OAK · DOOR BANK + SHELF TOWER',
+    alt: 'Built-in oak-look wardrobe with a run of hinged doors and drawers alongside an open shelving tower',
+  },
+  'office-display/display-unit-wine-rack.jpg': {
+    order: 26,
+    caption: 'DISPLAY UNIT · WHITE + OAK · WINE RACK',
+    alt: 'White gloss and oak-look display wall unit with an integrated wine rack, open shelving and grey stone benchtop over cupboards',
+  },
+  'kitchens/kitchen-white-gloss-lshape.jpg': {
+    order: 27,
+    caption: 'KITCHEN · GLOSS WHITE · L-SHAPE',
+    alt: 'L-shaped kitchen in gloss white with marble-look splashback, gas cooktop, built-in oven and undermount sink below a window',
+  },
+  'kitchens/kitchen-oak-fridge-pendant.jpg': {
+    order: 28,
+    caption: 'KITCHEN · OAK · FRIDGE + PENDANT LIGHT',
+    alt: 'Oak-look kitchen with integrated stainless fridge and dishwasher, overhead cupboards and a pendant light above the benchtop',
+  },
+  'office-display/office-desk-fan-nook.jpg': {
+    order: 29,
+    caption: 'HOME OFFICE · BUILT-IN DESK · OVERHEAD STORAGE',
+    alt: 'Built-in home office desk with a stone-look benchtop, drawer unit, open shelving and overhead cupboards below a ceiling fan',
+  },
+  'office-display/servery-nook-dark-stone.jpg': {
+    order: 30,
+    caption: 'SERVERY NOOK · DARK STONE · WALL RECESS',
+    alt: 'Servery cabinet with a dark stone benchtop and gloss white cupboards and drawers, built into a wall recess',
+  },
+  'office-display/office-desk-grey-wardrobe.jpg': {
+    order: 31,
+    caption: 'HOME OFFICE · GREY · DESK + WARDROBE',
+    alt: 'Grey built-in home office desk with drawer unit and overhead cupboards beside a tall gloss wardrobe',
+  },
+  'office-display/office-desk-oak-white.jpg': {
+    order: 32,
+    caption: 'HOME OFFICE · OAK + WHITE · FLOATING DESK',
+    alt: 'Oak and white home office desk with a marble-look benchtop, open shelving above and a white drawer unit below',
+  },
+  'laundry/laundry-white-gloss-washer.jpg': {
+    order: 33,
+    caption: 'LAUNDRY · WHITE GLOSS · WASHER + SINK',
+    alt: 'White gloss laundry cabinetry with overhead cupboards, front-loading washing machine and a stainless sink set into the benchtop',
+  },
+  'prayer-cabinets/prayer-cabinet-grey-statues.jpg': {
+    order: 34,
+    caption: 'PRAYER CABINET · GREY WOODGRAIN · STATUES',
+    alt: 'Grey woodgrain prayer cabinet with a wall crucifix and floating shelves displaying religious statues, over a cupboard base',
+  },
+  'prayer-cabinets/prayer-unit-oak-empty.jpg': {
+    order: 35,
+    caption: 'PRAYER UNIT · OAK · FLOATING SHELVES',
+    alt: 'Light oak prayer unit with an overhead open shelf, small floating side shelves and a two-drawer cupboard base, newly installed',
+  },
+  'prayer-cabinets/prayer-altar-walnut-slat.jpg': {
+    order: 36,
+    caption: 'PRAYER ALTAR · WALNUT · SLAT PANELS',
+    alt: 'Walnut-toned prayer altar with vertical slat wall panels either side of a crucifix and statues, over a drawer and cupboard base',
+  },
 };
