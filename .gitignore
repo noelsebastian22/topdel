@@ -13,3 +13,4 @@ CLAUDE.local.md
 .mcp.json
 AGENTS.md
 memory/
+.DS_Store
