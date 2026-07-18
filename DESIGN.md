@@ -16,11 +16,11 @@ colors:
 typography:
   display:
     fontFamily: "Archivo Variable, Archivo, sans-serif"
-    fontSize: "clamp(2.6rem, 7.2vw, 5.2rem)"
+    fontSize: "clamp(2.4rem, 5.4vw, 4.2rem)"
     fontWeight: 850
     lineHeight: 1.05
     letterSpacing: "-0.015em"
-    fontVariation: "width 122%"
+    fontVariation: "width 112%"
   headline:
     fontFamily: "Archivo Variable, Archivo, sans-serif"
     fontSize: "clamp(1.9rem, 3.6vw, 2.8rem)"
@@ -122,7 +122,7 @@ A drafting-table palette: navy ink, blueprint-blue annotations, paper tint, and 
 - **Fault Red** (`#a4271b`): Reserved solely for form error states. Never decorative.
 
 ### Named Rules
-**The One-Action Yellow Rule.** Tape-measure yellow is only ever used on something the visitor is meant to *do* (a primary CTA, the phone action) or on the two brand fixtures that stand in for it (the mark tile, the address plate). It is forbidden as a decorative fill, a heading colour, or a section background — except the deliberate contact band, which is itself one big call to action. If yellow appears and nothing there is clickable, it's wrong.
+**The One-Action Yellow Rule.** Tape-measure yellow is only ever used on something the visitor is meant to *do* (a primary CTA, the phone action) or on the two brand fixtures that stand in for it (the mark tile, the address plate). It is forbidden as a decorative fill, a heading colour, or a section background — with exactly two sanctioned exceptions: the deliberate contact band, which is itself one big call to action, and the hero H1 accent span ("the millimetre."), the brand's promise rendered in the brand's colour, once per site. If yellow appears anywhere else and nothing there is clickable, it's wrong.
 
 **The No-Grey-On-Colour Rule.** Text on navy or yellow is never mid-grey. On navy, use white or a white transparency (≥0.72 for body). On yellow, use Drafting Navy. Grey on a colour reads as washed-out and undercuts the precision.
 
@@ -135,7 +135,7 @@ A drafting-table palette: navy ink, blueprint-blue annotations, paper tint, and 
 **Character:** A grotesque-sans hierarchy with one deliberate trick — Archivo's width axis is expanded (`font-stretch: 115–125%`) so headings read broad, planted, and confident, like stencilled signage on a workshop wall. Instrument Sans keeps body copy neutral and legible underneath. IBM Plex Mono is the drawing's annotation hand: it labels, dimensions, and captions, and it is the single strongest carrier of the "shop drawing" voice. The three sit on a clear contrast axis (expanded-grotesque display / neutral humanist body / technical mono), so they never blur together.
 
 ### Hierarchy
-- **Display** (Archivo, weight 850, `clamp(2.6rem, 7.2vw, 5.2rem)`, line-height 1.05, width 122%): Hero H1 only. Set on navy in white, `text-wrap: balance`.
+- **Display** (Archivo, weight 850, `clamp(2.4rem, 5.4vw, 4.2rem)`, line-height 1.05, width 112%): Hero H1 only. Set over the hero photograph in white, with the closing phrase ("the millimetre.") in tape-measure yellow — the one sanctioned non-action use of yellow. Sized to sit inside the image's quiet zone; premium is carried by air and restraint, not scale. `text-wrap: balance`.
 - **Headline** (Archivo, weight 800, `clamp(1.9rem, 3.6vw, 2.8rem)`, line-height 1.05, width 115%): Section H2s. Colour flips with the band (navy on light, white on the dark Process band).
 - **Title** (Archivo, weight 800, `1.35rem`, line-height 1.1): Card and step H3s (services, process, footer columns).
 - **Body** (Instrument Sans, weight 400, `1.0625rem`, line-height 1.6, colour Slate): Paragraph copy. Hold measures to ~34rem / 65–75ch; the hero sub and contact copy already cap near there.

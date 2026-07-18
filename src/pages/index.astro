@@ -78,16 +78,37 @@ const processSteps = [
       <div class="dim dim-h" aria-hidden="true"><span>WALL TO WALL · NO FILLER PANELS</span></div>
 
       <div class="container hero-in">
-        <p class="eyebrow eyebrow--light eyebrow--start">Custom joinery — measured · made · installed</p>
-        <h1>Storage built to<br />the millimetre.</h1>
+        <p class="eyebrow eyebrow--light eyebrow--start">Custom joinery</p>
+        <p class="hero-kicker-sub">Measured · Made · Installed</p>
+        <h1>Storage built to<br /><span class="hl">the millimetre.</span></h1>
         <p class="hero-sub">
           TopDel designs, makes and installs custom wardrobes, kitchens, home office and
           laundry fitouts — cut to your room’s exact dimensions, with no wasted corners.
         </p>
         <div class="hero-cta">
-          <a class="btn btn-solid magnetic" href={PHONE_TEL}>Call {PHONE_DISPLAY}</a>
-          <a class="btn btn-ghost" href="#work">See recent fitouts</a>
+          <a class="btn btn-solid magnetic" href="#contact">Book a free measure &amp; quote</a>
+          <a class="btn btn-ghost" href="#work">View our projects</a>
         </div>
+
+        <!-- what we build — annotation strip, doubles as nav into Services -->
+        <nav class="hero-services" aria-label="What we build">
+          <a href="#services">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><rect x="4.5" y="3" width="15" height="18" rx="1" /><path d="M12 3v18" /><path d="M9.75 10.5v3M14.25 10.5v3" /></svg>
+            <span>Wardrobes</span>
+          </a>
+          <a href="#services">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M3.5 10.5h17" /><rect x="4.5" y="10.5" width="15" height="9.5" rx="1" /><path d="M12 10.5V20" /><path d="M8.25 15v.5M15.75 15v.5" /><path d="M9.5 7.25v-2.5h5v2.5" /></svg>
+            <span>Kitchens</span>
+          </a>
+          <a href="#services">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><rect x="7.5" y="3.5" width="9" height="6.5" rx="1" /><path d="M12 10v3" /><path d="M3.5 13h17" /><path d="M5.5 13v7.5M18.5 13v7.5" /></svg>
+            <span>Home office</span>
+          </a>
+          <a href="#services">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><rect x="4.5" y="3" width="15" height="18" rx="1.5" /><circle cx="12" cy="13.5" r="4" /><path d="M7.5 6v.01M10 6v.01" /><path d="M14.5 6h2" /></svg>
+            <span>Laundry</span>
+          </a>
+        </nav>
       </div>
 
     </section>
@@ -335,19 +356,54 @@ const processSteps = [
   }
   .hero-scrim {
     position: absolute; inset: 0;
+    /* the generated wall is already near-black — this is a light navy tie-in
+       plus legibility insurance at the text edge, not a darkening layer */
     background:
-      linear-gradient(78deg, color-mix(in srgb, var(--ink) 90%, transparent) 18%, color-mix(in srgb, var(--ink) 55%, transparent) 52%, color-mix(in srgb, var(--ink) 25%, transparent) 100%);
+      linear-gradient(78deg, color-mix(in srgb, var(--ink) 46%, transparent) 0%, color-mix(in srgb, var(--ink) 22%, transparent) 46%, transparent 78%);
   }
   .hero-in { position: relative; padding-block: 8rem 6rem; }
   .hero h1 {
     color: var(--white);
-    font-size: clamp(2.6rem, 7.2vw, 5.2rem);
-    font-weight: 850; font-stretch: 122%;
+    /* sized to live inside the flat-wall quiet zone — premium is air, not scale */
+    font-size: clamp(2.4rem, 5.4vw, 4.2rem);
+    font-weight: 850; font-stretch: 112%;
     margin-bottom: 1.4rem;
+  }
+  /* the one sanctioned non-action yellow: the brand's two most important words */
+  .hero h1 .hl { color: var(--yellow); }
+  /* two-tier kicker: mono spec label above, quiet humanist sub-line below */
+  .hero-in .eyebrow { margin-bottom: 0.5rem; }
+  .hero-kicker-sub {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 1rem; letter-spacing: 0.04em;
+    margin-bottom: 1.8rem;
   }
   .hero-sub { color: rgba(255, 255, 255, 0.85); max-width: 34rem; font-size: 1.15rem; margin-bottom: 2.2rem; }
   .hero-cta { display: flex; flex-wrap: wrap; gap: 0.9rem; }
   .magnetic { will-change: transform; }
+
+  /* what-we-build strip — the drawing's annotation layer, doubles as nav */
+  .hero-services {
+    display: flex; flex-wrap: wrap;
+    margin-top: 2.8rem; padding-top: 1.7rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
+    max-width: 40rem;
+  }
+  .hero-services a {
+    display: flex; flex-direction: column; gap: 0.6rem;
+    padding-inline: clamp(1.1rem, 2.6vw, 2rem);
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+  .hero-services a:first-child { padding-inline-start: 0; }
+  .hero-services a + a { border-left: 1px solid rgba(255, 255, 255, 0.22); }
+  .hero-services svg { width: 26px; height: 26px; }
+  .hero-services span {
+    font-family: var(--font-mono); font-size: 0.62rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase; white-space: nowrap;
+  }
+  .hero-services a:hover, .hero-services a:focus-visible { color: var(--yellow); }
 
   /* shop-drawing dimension annotations */
   .dim { position: absolute; z-index: 2; color: rgba(255, 255, 255, 0.85); pointer-events: none; }
@@ -561,6 +617,9 @@ const processSteps = [
     .cat-grid { grid-template-columns: 1fr; }
     .quotes-grid { grid-template-columns: 1fr; }
     .hero-in { padding-block: 7rem 4.5rem; }
+    .hero-services { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem 1rem; }
+    .hero-services a { padding-inline: 0; }
+    .hero-services a + a { border-left: 0; }
     /* tall phone crop: centre on the hanging rail, not the empty wall */
     .hero-media img { object-position: 60% 50%; }
     .qf-row { grid-template-columns: 1fr; gap: 0; }

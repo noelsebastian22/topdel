@@ -1,6 +1,52 @@
 # Memory — Socials + Contact Actions + Web3Forms Wiring, + Footer Wordmark Fix, + Audit
 
-Last updated: 2026-07-16 18:40
+Last updated: 2026-07-18
+
+## Session update (2026-07-18): Hero video → Gemini-generated image swap
+
+### What was built
+
+- **Hero image generated with Gemini (nano banana)** from an art-directed prompt (16:9,
+  wide interior, wardrobe on right third, quiet blue wall on left for headline space,
+  natural light, no people). Watermark sparkle cropped off the right edge (150px) →
+  final source **`src/assets/hero-wardrobe.jpg` (2666×1536, ~583KB)**. Uncropped
+  original preserved at **`gallery/hero-wardrobe-master.png`**.
+- **`src/pages/index.astro`** — hero `<video>` fully replaced with an `astro:assets`
+  `<Picture>`: avif/webp/jpg at 5 widths (~18KB mobile webp → ~286KB full-width avif),
+  `loading="eager"` + `fetchpriority="high"` (LCP), explicit `width`/`height` (no CLS),
+  `object-position: 56%` desktop / `60%` on phones. Navy scrim + shop-drawing dimension
+  annotations kept as-is. Desktop parallax retargeted to the image (still
+  `prefers-reduced-motion` gated). **Removed**: video toggle button, lazy-load video JS,
+  `.video-toggle` styles. Old video + poster left in `public/media/` unreferenced
+  (recoverable). `CLAUDE.md` updated to match.
+- Build verified clean; `dist/` hero `<picture>` markup, parallax target, and zero stale
+  `heroVideo`/`videoToggle`/`hero-poster` references all confirmed.
+
+### Git state
+
+- New branch **`hero-image-swap`** (branched off `color-theme-change`), commit
+  **`1e5e5eb`** (3 files: `index.astro`, `hero-wardrobe.jpg`, `hero-wardrobe-master.png`),
+  **pushed** with tracking → PR link:
+  https://github.com/noelsebastian22/topdel/pull/new/hero-image-swap
+- Note: a PR from `hero-image-swap` will include the earlier `color-theme-change`
+  commits unless that branch merges first (or the branch is rebased onto `main`).
+
+### NOT satisfied — rework needed (user feedback)
+
+- **The hero image alignment does not look good in place — the image needs to be
+  changed/regenerated.** Re-art-direct the composition (where the wardrobe sits vs.
+  where the headline sits) and/or re-tune crop + `object-position` per breakpoint.
+- **Hero typography needs a rethink** alongside the new image — headline size,
+  placement, and how it interacts with the image's quiet zone should be redesigned
+  together, not patched.
+
+### Next session starts with
+
+1. Regenerate/re-art-direct the hero image (fix composition/alignment) — prompt and
+   pipeline from this session are reusable; remember to crop the Gemini watermark edge
+   and keep the uncropped master in `gallery/`.
+2. Rethink hero typography as part of the same pass (consider `/impeccable typeset`).
+3. Then the standing carryovers below (Web3Forms key, PRs, mobile verification).
 
 ## Session update: footer wordmark comment fix + `/impeccable audit`
 
