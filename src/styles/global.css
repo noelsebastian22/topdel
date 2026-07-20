@@ -1,18 +1,18 @@
 /* ————— TopDel House Decor — design tokens ————— */
 :root {
-  --ink: #042343;       /* deep navy — brand-logo background; headers, footer, headings */
-  --blue: #2e6fb7;      /* blueprint blue — links, accents */
-  --tint: #eaf1f8;      /* drafting-paper tint — alternate sections */
-  --yellow: #ffb917;    /* tape-measure yellow — CTAs only */
+  --ink: #042343; /* deep navy — brand-logo background; headers, footer, headings */
+  --blue: #2e6fb7; /* blueprint blue — links, accents */
+  --tint: #eaf1f8; /* drafting-paper tint — alternate sections */
+  --yellow: #ffb917; /* tape-measure yellow — CTAs only */
   --white: #ffffff;
-  --slate: #4a5a72;     /* body text on light */
-  --fault: #a4271b;     /* form error state — the one red in the system */
+  --slate: #4a5a72; /* body text on light */
+  --fault: #a4271b; /* form error state — the one red in the system */
   --line: color-mix(in srgb, var(--ink) 16%, transparent);
   --line-light: rgba(255, 255, 255, 0.35);
 
-  --font-display: 'Archivo Variable', 'Archivo', sans-serif;
-  --font-body: 'Instrument Sans Variable', 'Instrument Sans', sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --font-display: "Archivo Variable", "Archivo", sans-serif;
+  --font-body: "Instrument Sans Variable", "Instrument Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
   --radius: 6px;
   --gutter: clamp(1.25rem, 4vw, 2.5rem);
@@ -24,12 +24,24 @@
 }
 
 /* ————— reset ————— */
-*, *::before, *::after { box-sizing: border-box; }
-* { margin: 0; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
 /* While a modal (gallery lightbox) is open: freeze page scroll, but keep the
    scrollbar's gutter reserved so opening/closing never shifts the layout. */
-html:has(dialog[open]) { overflow: hidden; scrollbar-gutter: stable; }
+html:has(dialog[open]) {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
 body {
   font-family: var(--font-body);
   font-size: 1.0625rem;
@@ -38,11 +50,23 @@ body {
   background: var(--white);
   -webkit-font-smoothing: antialiased;
 }
-img, video, svg { display: block; max-width: 100%; }
-button { font: inherit; cursor: pointer; }
-a { color: var(--blue); }
+img,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+}
+button {
+  font: inherit;
+  cursor: pointer;
+}
+a {
+  color: var(--blue);
+}
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: var(--font-display);
   color: var(--ink);
   line-height: 1.05;
@@ -52,20 +76,33 @@ h1, h2, h3 {
   text-wrap: balance;
 }
 
-:focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 3px;
+}
 
-::selection { background: var(--yellow); color: var(--ink); }
+::selection {
+  background: var(--yellow);
+  color: var(--ink);
+}
 
 /* ————— shared primitives ————— */
-.container { width: min(1160px, 100% - 2 * var(--gutter)); margin-inline: auto; }
+.container {
+  width: min(1160px, 100% - 2 * var(--gutter));
+  margin-inline: auto;
+}
 
 /* brand lockup — used by the shared header and footer components */
-.brand { display: inline-flex; align-items: center; text-decoration: none; }
+.brand {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
 .brand-logo {
   /* Show at a fixed height so the logo scales cleanly to the header bar.
      width:auto preserves the 1:1 square aspect ratio of the source image.
      object-fit:contain guards against any resampling artefacts. */
-  height: 52px;
+  height: 68px;
   width: auto;
   object-fit: contain;
   display: block;
@@ -73,114 +110,236 @@ h1, h2, h3 {
 
 /* dimension-line eyebrow — mono label between measured ticks */
 .eyebrow {
-  display: flex; align-items: center; gap: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
   font-family: var(--font-mono);
-  font-size: 0.72rem; font-weight: 500;
-  letter-spacing: 0.18em; text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   color: var(--blue);
   margin-bottom: 1.1rem;
 }
-.eyebrow::before, .eyebrow::after {
-  content: ''; height: 9px; width: 42px; flex: none;
+.eyebrow::before,
+.eyebrow::after {
+  content: "";
+  height: 9px;
+  width: 42px;
+  flex: none;
   border-inline: 1px solid currentColor;
-  background: linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat;
+  background: linear-gradient(currentColor, currentColor) center / 100% 1px
+    no-repeat;
 }
-.eyebrow--start::after { display: none; }
-.eyebrow--light { color: var(--yellow); }
+.eyebrow--start::after {
+  display: none;
+}
+.eyebrow--light {
+  color: var(--yellow);
+}
 
 .btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   padding: 0.95rem 1.7rem;
-  font-family: var(--font-display); font-weight: 700; font-size: 1rem;
-  letter-spacing: 0.01em; text-decoration: none;
-  border-radius: var(--radius); border: 2px solid transparent;
-  transition: transform 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border-radius: var(--radius);
+  border: 2px solid transparent;
+  transition:
+    transform 0.18s ease,
+    background-color 0.18s ease,
+    color 0.18s ease;
 }
-.btn-solid { background: var(--yellow); color: var(--ink); }
-.btn-solid:hover { background: #ffc945; }
-.btn-ghost { border-color: var(--line-light); color: var(--white); }
-.btn-ghost:hover { border-color: var(--white); }
-.btn-navy { background: var(--ink); color: var(--white); }
-.btn-navy:hover { background: #10365e; }
+.btn-solid {
+  background: var(--yellow);
+  color: var(--ink);
+}
+.btn-solid:hover {
+  background: #ffc945;
+}
+.btn-ghost {
+  border-color: var(--line-light);
+  color: var(--white);
+}
+.btn-ghost:hover {
+  border-color: var(--white);
+}
+.btn-navy {
+  background: var(--ink);
+  color: var(--white);
+}
+.btn-navy:hover {
+  background: #10365e;
+}
 /* tactile press — a firm 1px push, matches the "precise & confident" component feel */
-.btn:active { transform: translateY(1px); }
+.btn:active {
+  transform: translateY(1px);
+}
 
 /* ————— scroll reveals (only when JS present + motion allowed) ————— */
 @media (prefers-reduced-motion: no-preference) {
   .js [data-reveal] {
-    opacity: 0; transform: translateY(26px);
-    transition: opacity 0.65s ease, transform 0.65s var(--ease-out-quint);
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+      opacity 0.65s ease,
+      transform 0.65s var(--ease-out-quint);
   }
-  .js [data-reveal].in { opacity: 1; transform: none; }
+  .js [data-reveal].in {
+    opacity: 1;
+    transform: none;
+  }
 
   /* ——— signature hero entrance: the shop drawing drafts itself, top to bottom ———
      Lives here (not in the scoped page style) because it keys off `.js` on <html>,
      which a component-scoped selector can't reach. Opt-in: no JS or reduced motion
      leaves every element in its natural, fully-visible state. */
-  .js .hero-in > * { animation: heroRise 0.75s var(--ease-out-expo) both; }
-  .js .hero-in > .eyebrow { animation-delay: 0.05s; }
-  .js .hero-in > h1 { animation: heroWipe 0.85s var(--ease-out-expo) 0.15s both; }
-  .js .hero-in > .hero-sub { animation-delay: 0.4s; }
-  .js .hero-in > .hero-cta { animation-delay: 0.54s; }
+  .js .hero-in > * {
+    animation: heroRise 0.75s var(--ease-out-expo) both;
+  }
+  .js .hero-in > .eyebrow {
+    animation-delay: 0.05s;
+  }
+  .js .hero-in > .hero-kicker-sub {
+    animation-delay: 0.1s;
+  }
+  .js .hero-in > h1 {
+    animation: heroWipe 0.85s var(--ease-out-expo) 0.15s both;
+  }
+  .js .hero-in > .hero-sub {
+    animation-delay: 0.4s;
+  }
+  .js .hero-in > .hero-cta {
+    animation-delay: 0.54s;
+  }
+  .js .hero-in > .hero-services {
+    animation-delay: 0.68s;
+  }
 
   /* the measurement layer draws itself in last, framing the composition */
-  .js .dim-v { animation: drawDown 0.9s var(--ease-out-quart) 0.62s both; }
-  .js .dim-h { animation: drawRight 0.9s var(--ease-out-quart) 0.8s both; }
+  .js .dim-v {
+    animation: drawDown 0.9s var(--ease-out-quart) 0.62s both;
+  }
+  .js .dim-h {
+    animation: drawRight 0.9s var(--ease-out-quart) 0.8s both;
+  }
 
   /* process: a real sequence, so it reveals as one — Measure → Design → Make → Install */
-  .js .process-grid > [data-reveal] { transition-delay: calc(var(--i, 0) * 90ms); }
+  .js .process-grid > [data-reveal] {
+    transition-delay: calc(var(--i, 0) * 90ms);
+  }
   .js .p-step::before {
     transform: scaleX(0);
     transition: transform 0.6s var(--ease-out-quart);
     transition-delay: calc(var(--i, 0) * 90ms);
   }
-  .js .p-step.in::before { transform: scaleX(1); }
+  .js .p-step.in::before {
+    transform: scaleX(1);
+  }
 
   /* grids cascade as lists rather than one uniform fade (per-row, capped) */
-  .js .services-grid > [data-reveal] { transition-delay: calc(var(--i, 0) * 55ms); }
-  .js .g-grid > [data-reveal] { transition-delay: calc(var(--i, 0) * 60ms); }
-  .js .cat-grid > [data-reveal] { transition-delay: calc(var(--i, 0) * 60ms); }
+  .js .services-grid > [data-reveal] {
+    transition-delay: calc(var(--i, 0) * 55ms);
+  }
+  .js .g-grid > [data-reveal] {
+    transition-delay: calc(var(--i, 0) * 60ms);
+  }
+  .js .cat-grid > [data-reveal] {
+    transition-delay: calc(var(--i, 0) * 60ms);
+  }
 
   /* testimonials: cards cascade in, then each rules its own top edge —
      same drafting gesture as the process steps */
-  .js .quotes-grid > [data-reveal] { transition-delay: calc(var(--i, 0) * 70ms); }
+  .js .quotes-grid > [data-reveal] {
+    transition-delay: calc(var(--i, 0) * 70ms);
+  }
   .js .quote-card::before {
     transform: scaleX(0);
     transition: transform 0.6s var(--ease-out-quart);
     transition-delay: calc(var(--i, 0) * 70ms + 150ms);
   }
-  .js .quote-card.in::before { transform: scaleX(1); }
+  .js .quote-card.in::before {
+    transform: scaleX(1);
+  }
 
   /* form status eases in instead of snapping */
-  .qf-status:not(:empty) { animation: statusIn 0.3s var(--ease-out-quart) both; }
+  .qf-status:not(:empty) {
+    animation: statusIn 0.3s var(--ease-out-quart) both;
+  }
 }
 
 @keyframes heroRise {
-  from { opacity: 0; transform: translateY(1.5rem); }
-  to   { opacity: 1; transform: none; }
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 @keyframes heroWipe {
-  from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(0.9rem); }
-  to   { opacity: 1; clip-path: inset(0 0 0 0);    transform: none; }
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(0.9rem);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: none;
+  }
 }
 @keyframes drawDown {
-  from { opacity: 0; clip-path: inset(0 0 100% 0); }
-  18%  { opacity: 1; }
-  to   { opacity: 1; clip-path: inset(0 0 0 0); }
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+  }
+  18% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
 }
 @keyframes drawRight {
-  from { opacity: 0; clip-path: inset(0 100% 0 0); }
-  18%  { opacity: 1; }
-  to   { opacity: 1; clip-path: inset(0 0 0 0); }
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  18% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
 }
 @keyframes statusIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: none; }
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
