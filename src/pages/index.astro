@@ -689,10 +689,10 @@ const processSteps = [
   }
 
   /* ——— quote form — Web3Forms (https://web3forms.com) ——— */
-  // TODO before go-live: sign up at web3forms.com with the client's email address
-  // and paste the real access key below. Submissions are emailed to that address.
+  // Access key is tied to sales@topdelrenovation.com.au — submissions are emailed there.
+  // Web3Forms keys are public by design, safe to ship client-side.
   const FORM_ENDPOINT = 'https://api.web3forms.com/submit';
-  const WEB3FORMS_KEY = 'TODO-REPLACE-WITH-CLIENT-ACCESS-KEY';
+  const WEB3FORMS_KEY = '324cd749-00f5-4139-bef7-68e29a07b3cc';
   const form = doc.getElementById('quoteForm') as HTMLFormElement | null;
   const status = doc.getElementById('qfStatus') as HTMLParagraphElement | null;
   if (form && status) {
