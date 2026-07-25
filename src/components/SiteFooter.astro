@@ -1,20 +1,33 @@
 ---
-import { BUSINESS_NAME, PHONE_DISPLAY, PHONE_TEL, WHATSAPP_URL, INSTAGRAM_URL, FACEBOOK_URL } from '../data/site';
+import {
+  BUSINESS_NAME,
+  PHONE_DISPLAY,
+  PHONE_TEL,
+  WHATSAPP_URL,
+  INSTAGRAM_URL,
+  FACEBOOK_URL,
+} from "../data/site";
 
-const [brandFirst, ...brandRest] = BUSINESS_NAME.split(' ');
-const brandSuffix = brandRest.join(' ');
+const [brandFirst, ...brandRest] = BUSINESS_NAME.split(" ");
+const brandSuffix = brandRest.join(" ");
 ---
 
 <footer class="footer">
   <div class="container footer-grid">
     <div>
-      <a class="brand brand--footer" href="#top" aria-label={`${BUSINESS_NAME} — home`}>
+      <a
+        class="brand brand--footer"
+        href="#top"
+        aria-label={`${BUSINESS_NAME} — home`}
+      >
         <span class="brand-word">
           <span class="brand-word-main">{brandFirst.toUpperCase()}</span>
           <span class="brand-word-sub">{brandSuffix.toUpperCase()}</span>
         </span>
       </a>
-      <p class="footer-blurb">Custom cabinetry and joinery — measured, made and installed by one team.</p>
+      <p class="footer-blurb">
+        Custom cabinetry and joinery — measured, made and installed by one team.
+      </p>
     </div>
     <nav aria-label="Footer services">
       <h3>Services</h3>
@@ -28,38 +41,123 @@ const brandSuffix = brandRest.join(' ');
       <h3>Contact</h3>
       <a href={PHONE_TEL}>{PHONE_DISPLAY}</a>
       <a href={WHATSAPP_URL} target="_blank" rel="noopener">WhatsApp us</a>
-      <a href={FACEBOOK_URL} target="_blank" rel="noopener">Find us on Facebook</a>
-      <a href={INSTAGRAM_URL} target="_blank" rel="noopener">Follow on Instagram</a>
+      <a href={FACEBOOK_URL} target="_blank" rel="noopener"
+        >Find us on Facebook</a
+      >
+      <a href={INSTAGRAM_URL} target="_blank" rel="noopener"
+        >Follow on Instagram</a
+      >
     </div>
   </div>
   <div class="container footer-fine">
     <p>© 2026 {BUSINESS_NAME}. Call today for a free quote.</p>
+    <p class="footer-credit">
+      Built &amp; managed by <a
+        href="https://daganalytics.com.au/"
+        target="_blank"
+        rel="noopener">Dag Analytics</a
+      >
+    </p>
   </div>
 </footer>
 
 <style>
-  .footer { background: var(--ink); color: rgba(255, 255, 255, 0.8); padding-block: 3.5rem 0; }
-  .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2.5rem; padding-bottom: 2.8rem; }
-  .footer h3 { color: var(--white); font-size: 0.95rem; margin-bottom: 0.9rem; }
-  .footer a { color: rgba(255, 255, 255, 0.8); text-decoration: none; display: block; margin-bottom: 0.55rem; }
-  .footer a:hover { color: var(--yellow); }
-  .footer-blurb { margin-top: 1rem; font-size: 0.95rem; max-width: 26rem; }
+  .footer {
+    background: var(--ink);
+    color: rgba(255, 255, 255, 0.8);
+    padding-block: 3.5rem 0;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 2.5rem;
+    padding-bottom: 2.8rem;
+  }
+  .footer h3 {
+    color: var(--white);
+    font-size: 0.95rem;
+    margin-bottom: 0.9rem;
+  }
+  .footer a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 0.55rem;
+  }
+  .footer a:hover {
+    color: var(--yellow);
+  }
+  .footer-blurb {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    max-width: 26rem;
+  }
 
   /* brand wordmark — Title (Archivo, expanded) + Label (mono, tracked) per DESIGN.md */
-  .brand-word { display: flex; flex-direction: column; line-height: 1; gap: 0.35rem; }
+  .brand-word {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    gap: 0.35rem;
+  }
   .brand-word-main {
-    font-family: var(--font-display); font-weight: 800; font-stretch: 118%;
-    font-size: 1.55rem; letter-spacing: -0.01em; color: var(--white);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-stretch: 118%;
+    font-size: 1.55rem;
+    letter-spacing: -0.01em;
+    color: var(--white);
   }
   .brand-word-sub {
-    font-family: var(--font-mono); font-weight: 500; font-size: 0.62rem;
-    letter-spacing: 0.24em; color: var(--blue);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 0.62rem;
+    letter-spacing: 0.24em;
+    color: var(--blue);
   }
-  .brand--footer:hover .brand-word-main { color: var(--yellow); }
-  .footer-fine { border-top: 1px solid rgba(255, 255, 255, 0.15); padding-block: 1.3rem; }
-  .footer-fine p { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; }
+  .brand--footer:hover .brand-word-main {
+    color: var(--yellow);
+  }
+  .footer-fine {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding-block: 1.3rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.6rem 1.5rem;
+  }
+  .footer-fine p {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+  }
+  .footer-credit {
+    color: rgba(255, 255, 255, 0.55);
+  }
+  .footer-credit a {
+    display: inline;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.25);
+    text-underline-offset: 0.25em;
+    transition:
+      color 0.2s,
+      text-decoration-color 0.2s;
+  }
+  .footer-credit a:hover {
+    color: var(--yellow);
+    text-decoration-color: var(--yellow);
+  }
 
   @media (max-width: 599px) {
-    .footer-grid { grid-template-columns: 1fr; gap: 1.8rem; }
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 1.8rem;
+    }
+    .footer-fine {
+      justify-content: flex-start;
+    }
   }
 </style>
