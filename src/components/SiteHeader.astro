@@ -17,7 +17,19 @@ const workCurrent = current === 'gallery' ? 'page' : undefined;
 <header id="siteHeader" class="header">
   <div class="container header-in">
     <a class="brand" href={current === 'home' ? '#top' : '/'} aria-label={`${BUSINESS_NAME} — home`}>
-      <Image src={logo} alt={`${BUSINESS_NAME} logo`} class="brand-logo" width={120} height={120} />
+      {/* Lighthouse reports this logo as the LCP element, and astro:assets
+          defaults <Image> to loading="lazy" — so the largest paint was being
+          deliberately deferred. It sits in the fixed header, always above the
+          fold, so it must load eagerly at high priority. */}
+      <Image
+        src={logo}
+        alt={`${BUSINESS_NAME} logo`}
+        class="brand-logo"
+        width={120}
+        height={120}
+        loading="eager"
+        fetchpriority="high"
+      />
     </a>
     <nav class="nav" aria-label="Main">
       <a href={`${p}#services`}>Services</a>

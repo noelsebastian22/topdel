@@ -132,12 +132,16 @@ const processSteps = [
             <li><strong>Feature pieces</strong><span>TV walls, bars, prayer cabinets, face plates</span></li>
           </ul>
         </div>
+        {/* The photo never renders wider than ~490px (0.9fr of a 1160px
+            container), and 92vw on a phone at 2x lands around 700px — the old
+            420/640/900 ladder forced phones onto the 900w file, which Lighthouse
+            costed at 63 KiB. These steps bracket the sizes actually requested. */}
         <figure class="about-photo" data-reveal>
           <Image
             src={walkinOakCorner}
             alt="Oak walk-in wardrobe by TopDel with shelving, double hanging and drawer banks"
-            widths={[420, 640, 900]}
-            sizes="(min-width: 900px) 44vw, 92vw"
+            widths={[380, 520, 700, 900]}
+            sizes="(min-width: 1240px) 490px, (min-width: 900px) 40vw, 92vw"
             format="webp"
             quality={72}
             loading="lazy"
@@ -666,7 +670,7 @@ const processSteps = [
         ticking = true;
         requestAnimationFrame(() => {
           const y = scrollY;
-          if (y < innerHeight) video.style.transform = `translateY(${y * 0.16}px)`;
+          if (y < innerHeight) heroImg.style.transform = `translateY(${y * 0.16}px)`;
           ticking = false;
         });
       },
