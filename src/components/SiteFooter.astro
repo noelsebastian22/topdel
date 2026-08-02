@@ -113,7 +113,10 @@ const brandSuffix = brandRest.join(" ");
     font-weight: 500;
     font-size: 0.62rem;
     letter-spacing: 0.24em;
-    color: var(--blue);
+    /* --blue is specced for 4.5:1 on WHITE; the footer sits on --ink, where the
+       same value lands at ~3.1:1 and fails WCAG AA. A white alpha keeps the
+       quiet, secondary reading of the label without borrowing the CTA yellow. */
+    color: rgba(255, 255, 255, 0.78);
   }
   .brand--footer:hover .brand-word-main {
     color: var(--yellow);

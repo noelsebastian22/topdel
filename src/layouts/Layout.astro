@@ -1,16 +1,25 @@
 ---
-import '@fontsource-variable/archivo';
+// wdth.css alone carries BOTH axes (font-weight 100–900 + font-stretch
+// 62%–125%), so importing the wght-only index as well just shipped a second,
+// redundant set of @font-face rules for the same family.
 import '@fontsource-variable/archivo/wdth.css';
 import '@fontsource-variable/instrument-sans';
 import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-mono/500.css';
 import '../styles/global.css';
 
+import { BUSINESS_NAME } from '../data/site';
+
 interface Props {
   title: string;
   description: string;
 }
 const { title, description } = Astro.props;
+
+// Absolute, self-referencing canonical. Without it the site is reachable at
+// more than one URL (with/without trailing slash, www vs apex) and Google is
+// left to pick which one ranks.
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
 <!doctype html>
@@ -21,11 +30,18 @@ const { title, description } = Astro.props;
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#042343" />
+    <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="en_AU" />
+    <meta property="og:site_name" content={BUSINESS_NAME} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <meta name="generator" content={Astro.generator} />
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
