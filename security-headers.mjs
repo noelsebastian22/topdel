@@ -15,6 +15,18 @@ import { fileURLToPath } from 'node:url';
  * from the built HTML keeps the policy correct without anyone remembering to
  * update it.
  *
+ * Known and accepted: Cloudflare's Bot Fight Mode injects its own inline
+ * "JavaScript Detections" bootstrap into every HTML response, and the browser
+ * refuses it — one console error per page load. It cannot be hashed (the
+ * snippet embeds a per-request ray id and timestamp, so its hash differs every
+ * response) and Cloudflare's documented fix, a CSP nonce it rewrites into the
+ * injected tag, needs a per-response header this static site has no way to
+ * emit. The site's own scripts are unaffected; the only loss is the
+ * `cf.bot_management.js_detection.passed` signal, which nothing here uses.
+ * To silence it, turn off Bot Fight Mode (Cloudflare → Security → Bots), or
+ * add `no-transform` to the Cache-Control of HTML responses, which stops the
+ * injection at the edge.
+ *
  * Two consequences worth knowing before adding third-party code to the site:
  * - An external script (analytics, chat widget, embed) will be blocked until
  *   its origin is added to `script-src` below, and anything it fetches until
